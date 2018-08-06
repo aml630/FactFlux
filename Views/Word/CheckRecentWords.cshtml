@@ -1,0 +1,57 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+
+<h1>Check Words</h1>
+
+@foreach (var word in Model)
+{
+    <label>@word.Word1</label>
+       <input name="wordId" value="@word.WordId"/>
+       <button onclick="ban(@word.WordId)">Core</button>
+   <hr />
+
+}
+<form action="~/Word/BanAll">
+    <input value="1" name="daysBack" />
+    <button>BanRemaining</button>
+</form>
+<script>
+    $("button").click(function () {
+        $(this).css("background-color","green");
+    });
+
+    function ban(wordId) {
+
+        console.log(wordId)
+        //$.ajax({
+        //    type: "POST",
+        //    url: "/Word/SetAsCore/" + wordId+"/0",
+        //    //data: JSON.stringify(data),
+        //    contentType: "application/json; charset=utf-8",
+        //    dataType: "json"
+        //});
+
+
+        var pathArray = location.href.split('/');
+        var protocol = pathArray[0];
+        var host = pathArray[2];
+        var url = protocol + '//' + host;
+
+        var settings = {
+            "async": true,
+            "crossDomain": true,
+            "url": url + "/Word/SetAsCore/?wordId=" + wordId + "&set=1",
+            "method": "POST",
+            "headers": {
+                "cache-control": "no-cache"
+            }
+        }
+
+        $.ajax(settings).done(function (response) {
+            console.log(response);
+        });
+    }
+
+</script>

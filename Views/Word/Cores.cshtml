@@ -1,0 +1,19 @@
+﻿
+
+@{
+    ViewBag.Title = "View";
+}
+
+<h2>Cores</h2>
+
+<form action="~/Word/CheckFeedsForResources">
+    <button>Get Articles</button>
+</form>
+
+@foreach (var word in Model)
+{
+    <a href="~/word/@word.Word1">@word.Word1</a>
+            <p>@word.DateCreated</p>
+
+}
+

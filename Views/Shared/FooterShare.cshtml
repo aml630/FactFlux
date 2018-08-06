@@ -1,0 +1,79 @@
+﻿<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+
+<div class="shareBarParent">
+    <div class="ShareBar">
+        <a class="fb btn btn-danger" href="https://www.facebook.com/sharer/sharer.php?u=example.org" target="_blank">
+            <i class="fa fa-facebook" aria-hidden="true"></i>
+        </a>
+
+        <br />
+        <a class="tw btn btn-info" href="https://twitter.com/intent/tweet/?url=hey" target="_blank">
+            <i class="fa fa-twitter" aria-hidden="true"></i>
+        </a>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        var titleText = $("title").text();
+        var tweetUrl = "https://twitter.com/intent/tweet/?url=" + document.URL + "&text=" + titleText
+        $(".tw").attr('href', tweetUrl);
+
+        var fbUrl = "https://www.facebook.com/sharer/sharer.php?u="+document.URL
+
+        $(".fb").attr('href', fbUrl);
+
+    });
+
+</script>
+
+
+<style>
+     .shareBarParent{
+     position: fixed;
+     bottom: 0;
+     width: 100%;
+     z-index: 2;
+ }
+
+
+.ShareBar .tw i {
+    margin-top: 50%;
+    font-size: 20px;
+    margin-left: -10px;
+}
+
+.ShareBar .fb i {
+    font-size: 20px;
+    margin-left: -5px;
+}
+
+.btn-danger {
+    color: #ffffff;
+    background-color: #3b5998 !important;
+    border-color: #3b5998 !important;
+}
+
+.btn-danger:hover {
+    color: #ffffff;
+    background-color: #355088 !important;
+    border-color: #355088 !important;
+}
+
+
+    .fb {
+    width: 80px;
+    height: 30px;
+     z-index: 2;
+}
+
+.tw {
+     width: 130px;
+    height: 30px;
+     z-index: 2;
+}
+
+</style>

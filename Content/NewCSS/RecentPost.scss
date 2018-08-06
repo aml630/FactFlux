@@ -1,0 +1,119 @@
+﻿
+
+/*@import "compass/css3";*/
+
+/* Thanks to dmac37 for this hex technique */
+
+@import url(http://fonts.googleapis.com/css?family=Lato:300);
+
+
+ @mixin rotate($degrees) {
+    -webkit-transform: rotate($degrees);
+    -moz-transform: rotate($degrees);
+    -ms-transform: rotate($degrees);
+    -o-transform: rotate($degrees);
+    transform: rotate($degrees);
+}
+
+/* Variables */
+$width: 220px;
+$pink: rgba(230,0,98,.75);
+$green: rgba(169,160,50,.75);
+$yellow: rgba(252,171,55,.75);
+$brown: rgba(83,70,54,.75);
+
+.timelinesHeader {
+  font-family: 'Lobster', cursive;
+  font-size: 3em;
+  font-weight: 300;
+  text-align: center;
+ }
+
+
+
+body {
+  background: #fff;
+}
+
+section {
+  margin: 0 auto;
+  text-align: center;
+  width: 960px;
+}
+
+.hex_row_even {
+  display: inline-block;
+  margin: 0 auto -275px auto;
+  overflow: hidden;
+}
+
+.hex_row_odd {
+  display: inline-block;
+  margin: 0 auto -275px auto;
+  overflow: hidden;
+} 
+
+.center {
+  float: left;
+  margin: 20px 10px;
+  width: $width;
+}
+
+.hexagon {
+  @include rotate(120deg);
+  cursor: pointer;
+  height: ($width *2);
+  overflow: hidden;
+  visibility: hidden;
+  width: $width;
+}
+
+.hex1 {
+  @include rotate(-60deg);
+  height: 100%;
+  overflow: hidden;
+  width: 100%;
+}
+
+
+.hex2 {
+  @include rotate(-60deg);
+  height: 100%;
+  /*@include background-size(($width + ($width * .20)) ($width + ($width * .20)));*/
+  background-position: 50%;
+  position: relative;
+  visibility: visible;
+  width: 100%;
+}
+
+.desc {
+  color: white;
+  font-family: 'Lato', sans-serif;
+  font-size: 1.5em;
+  font-weight: 300;
+  height: ($width * 2);
+  line-height: 1.5em;
+  position: absolute;
+  text-align: center;
+  text-transform: uppercase; 
+  visibility: visible;
+  width: $width;
+  &.base {
+    background: $pink;
+  }
+  &.one {
+    background: $yellow;
+  }
+  &.two {
+    background: $green;
+  }
+  &.three {
+    background: $brown;
+  }
+  h2 {
+    margin: ($width - ($width / 4)) 20px 0 20px;
+  }
+  p {font-size: .5em; text-transform: lowercase;}
+}
+  
+  

@@ -1,0 +1,63 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model List<FactFlux.ArticleLink>
+
+<title>@ViewBag.MainWord.Word1</title>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap.js"></script>
+<link href="~/Content/NewCSS/MinimalistForm.css" rel="stylesheet" />
+<link href="~/Content/Timeline/Timeline.css" rel="stylesheet" />
+
+<body>
+
+    <link href="https://fonts.googleapis.com/css?family=Diplomata+SC" rel="stylesheet">
+
+    @Styles.Render("~/Post1/css")
+    @Scripts.Render("~/Post1/js")
+
+    <div class="centerText">
+
+        <h3>@ViewBag.MainWord.Word1</h3>
+    </div>
+    <div class="searchDiv">
+        <input class="searchInput" />
+        <i class="fa fa-search"></i>
+    </div>
+    <div class="sortButtons">
+        <div class="toggleVids">Videos</div>
+        <div class="toggleArticles">Articles</div>
+    </div>
+
+    <section id="cd-timeline" class="cd-container">
+        @foreach (var item in Model)
+        {
+            <div class="cd-timeline-block" data-feedType="@item.RSSFeed.FeedType">
+                <div class="cd-timeline-img cd-picture" style="background-image: url(@item.RSSFeed.SourceImage);">
+                </div> <!-- cd-timeline-img -->
+                @if (item.RSSFeed.FeedType == "RSS")
+                {
+                    <div class="cd-timeline-content">
+                        <p class="resourceText">@item.ArticleLinkTitle</p>
+                        <span class="cd-date">@item.DatePublished.ToString("dd MMM yyyy")</span>
+                        <a target="_blank" href="@item.ArticleLinkUrl" class="cd-read-more">Read Source</a>
+                    </div> <!-- cd-timeline-content -->
+                }
+                @if (item.RSSFeed.FeedType == "YouTube")
+                {
+                    <div class="cd-timeline-content">
+                        <h2 class="resourceText">@item.ArticleLinkTitle</h2>
+                        <div class="youtube-player" data-id="@item.ArticleLinkUrl"></div>
+                        <span class="cd-date">@item.DatePublished.ToString("dd MMM yyyy")</span>
+                    </div> <!-- cd-timeline-content -->
+                }
+            </div>
+        }
+
+    </section> <!-- cd-timeline -->
+
+</body>
+
+

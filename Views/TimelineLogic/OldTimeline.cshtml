@@ -1,0 +1,307 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<title>@Model.TimelineTitle: A Timeline</title>
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap.js"></script>
+<link href="~/Content/NewCSS/MinimalistForm.css" rel="stylesheet" />
+@if (Request.IsAuthenticated && User.IsInRole("Admin"))
+{
+    <div class="admin">
+
+        @foreach (var word in ViewBag.SearchWords)
+        {
+            <div style="border: 1px solid black;">
+                <h2>
+                    @word.SearchWordString
+                </h2>
+                @if
+                (word.SearchWordString2 != "")
+                {
+                <h2>@word.SearchWordString2</h2>
+                }
+
+
+                <form action="~/Resource/DeleteSearchWord">
+                    <input hidden name="searchWordId" value="@word.SearchWordId" />
+                    <input hidden name="slug" value=@Model.TimelineSlug />
+                    <button class="btn btn-warning">Delete Phrase(s)</button>
+                </form>
+            </div>
+        }
+
+        <hr />
+
+        @using (Html.BeginForm("UploadImage", "TimelineLogic", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <input type="file" name="imageFile" />
+            <input hidden name="slug" value=@Model.TimelineSlug />
+            <button class="btn btn-info">Upload Image</button>
+        }
+        <hr />
+        <form action="~/Resource/CheckFeedsForResourcesForSingleTimeline">
+            <input hidden name="timelineId" value=@Model.TimelineId />
+            <input hidden name="slug" value=@Model.TimelineSlug />
+            <button class="btn btn-danger">Pull down links for this article</button>
+        </form>
+        <hr />
+
+        <form action="~/Resource/AddSearchWord">
+            <input class="form-control input-lg" name="searchWord" placeholder="Search Word 1" />
+            <input class="form-control input-lg" name="searchWord2" placeholder="Search Word 2" />
+            <input hidden name="timeLineId" value=@Model.TimelineId />
+            <button class="btn btn-warning">Add Search Phrase(s)</button>
+        </form>
+        <hr />
+        <div class="addToTimelineContainer">
+            <div style="display: inline-flex;">
+                <div class="addFactForm">
+                    <div class="container">
+                        <div class="form-group row" data-toggle="validator">
+                            <form action="~/Resource/AddTimelineFact">
+                                <label>What Happened?</label>
+                                <textarea class="form-control input-lg" style="width:300px; height: 300px;"  name="factText" required></textarea>
+                                <label>When Did It Happen?</label>
+                                <input class="form-control input-lg" type="date" name="factDate" required />
+                                <label>What's Your Source?</label>
+                                <input class="form-control input-lg" name="factSource" required />
+                                <input hidden name="timeLineId" value=@Model.TimelineId />
+                                <input hidden name="slug" value=@Model.TimelineSlug />
+                                <button class="btn btn-info">Submit Fact</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="addLinkForm">
+                    <div class="container">
+                        <div class="form-group" data-toggle="validator">
+                            <form action="~/Resource/AddSingleLink">
+                                <label>What's The Link Title?</label>
+                                <input class="form-control input-lg" name="title" required />
+                                <label>When Was It Published</label>
+                                <input class="form-control input-lg" type="date" name="datepublished" required />
+                                <label>What's The URL?</label>
+                                <input class="form-control input-lg" name="link" required />
+                                <input hidden name="timeLineId" value=@Model.TimelineId />
+                                <button class="btn btn-info">Submit Link</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="addYouTubeForm">
+                    <div class="container">
+                        <div class="form-group" data-toggle="validator">
+                            <form action="~/Resource/AddYoutube">
+                                <label>What's The Youtube Title?</label>
+                                <input class="form-control input-lg" name="title" required />
+                                <input name="slug" hidden value="@Model.TimelineSlug" />
+                                <label>What's The Youtube Link?</label>
+                                <input class="form-control input-lg" name="YouTubeEmbed" required />
+                                <label>When Was It Published</label>
+                                <input class="form-control input-lg" type="date" name="datePublished" required />
+                                <input hidden name="timelineId" value=@Model.TimelineId />
+                                <button class="btn btn-info">Submit YouTube</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="addTweetForm">
+                    <div class="container">
+                        <div class="form-group" data-toggle="validator">
+                            <form action="~/Resource/AddTwitter">
+                                <label>What's The Tweet Embed?</label>
+                                <input class="form-control input-lg" name="TwitterEmbed" required />
+                                <label>When Was It Published</label>
+                                <input class="form-control input-lg" type="date" name="datePublished" required />
+                                <input hidden name="timeLineId" value=@Model.TimelineId />
+                                <button class="btn btn-info">Submit Twitter</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+@section AddToHead{
+    <meta property="og:image" content="http://www.factflux.com/@Model.TimelineImage" />
+    <meta property="og:url" content=document.URL />
+    <meta property="og:title" content="@Model.TimelineTitle: A Timeline" />
+    <meta property="fb:app_id" content="105543586755908" />
+    <meta property="og:image:width" content="620" />
+    <meta property="og:image:height" content="541" />
+    <meta property="og:description" content="Lets Walk Through It Step By Step" />
+}
+
+<body>
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <script src="~/Scripts/bootstrap.js"></script>
+
+    @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>*@
+    <!-- Bootstrap -->
+    <!-- Latest compiled and minified CSS -->
+
+
+
+    @Styles.Render("~/Post1/css")
+    @Scripts.Render("~/Post1/js")
+
+    @Html.Partial("_ShareBar")
+
+    <div style="background: linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url(@Model.TimelineImage) no-repeat fixed 50% 0%; background-size: 600px 400px; margin-top: 40px;" id="banner">
+        <div id="bannertext">
+            <h1>@Model.TimelineTitle</h1>
+            <h2>A Timeline</h2>
+        </div>
+    </div>
+
+
+    <button type="button" class="btn btn-primary btn-large" data-toggle="modal" data-target="#myModal">Launch demo modal</button>
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="purchaseLabel" aria-hidden="true">
+        <div class="modal-dialog">
+                <div class="modal-body">
+                    <form class="modalForm" action="~/Resource/AddTimelineFact">
+                        <label class="formLabel">What Happened?</label>
+                        <textarea id="factText" class="message textareaClass" name="factText" required></textarea>
+                        <label class="formLabel">When Did It Happen?</label>
+                        <input id="factDate" class="email formInput" type="date" name="factDate" required />
+                        <label class="formLabel">What's Your Source?</label>
+                        <input id="factSource" class="name formInput" name="factSource" required />
+                        <input id="factModelId" hidden name="timeLineId" value=@Model.TimelineId />
+                        <input id="factModelSlug" hidden name="slug" value=@Model.TimelineSlug />
+                        <button class="btn btn-info">Submit Event to Timeline</button>
+                    </form>
+               </div>
+        </div>
+    </div>
+
+    <section id="cd-timeline" class="cd-container">
+
+        @*<button class="btn hideTheLeft">Hide The Left</button>
+            <button class="btn hideTheRight">Hide The Right</button>*@
+        @foreach (var item in ViewBag.Resources)
+            {
+            <div class="cd-timeline-block" data-spectrum="@item.RSSFeed.SpectrumRank">
+                <div class="cd-timeline-img cd-picture" style="background-image: url(@item.RSSFeed.SourceImage);">
+                </div> <!-- cd-timeline-img -->
+                @if (item.FeedId == 1)
+                {
+                    <div class="cd-timeline-content">
+                        <p>@item.ResourceTitle</p>
+                        <span class="cd-date">@item.DatePublished.ToString("dd MMM yyyy")</span>
+                        <a target="_blank" href="@item.ResourceUrl" class="cd-read-more">Read Source</a>
+                    </div> <!-- cd-timeline-content -->
+                }
+                else if (item.FeedId == 3)
+                {
+                    <div class="cd-timeline-content">
+                        <h2>@item.ResourceTitle</h2>
+                        <div class="youtube-player" data-id="@item.ResourceUrl"></div>
+                        <span class="cd-date">@item.DatePublished.ToString("dd MMM yyyy")</span>
+                    </div> <!-- cd-timeline-content -->
+
+                }
+                else if (item.FeedId == 4)
+                {
+                    <div class="cd-timeline-content">
+                        @Html.Raw(item.FactText)
+                        <span class="cd-date">@item.DatePublished.ToString("dd MMM yyyy")</span>
+                    </div> <!-- cd-timeline-content -->
+                }
+                else
+                {
+                    <div class="cd-timeline-content">
+                        <a target="_blank" href="@item.ResourceUrl"><h2>@item.ResourceTitle</h2></a>
+                        <span class="cd-date">@item.DatePublished.ToString("dd MMM yyyy hh:mm tt PST")</span>
+                    </div> <!-- cd-timeline-content -->
+                }
+
+                @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                {
+                    <div class="admin">
+                        <form action="~/Resource/DeactivateResource">
+                            <input hidden name="resourceId" value="@item.ResourceId" />
+                            <input hidden name="slug" value=@Model.TimelineSlug />
+                            <button>Deactivate</button>
+                        </form>
+                    </div>
+                }
+            </div> <!-- cd-timeline-block -->
+        }
+
+    </section> <!-- cd-timeline -->
+
+    @Html.Partial("_ShareFooter");
+</body>
+
+
+
+<script>
+
+    function incrementSocialShare(shareType) {
+
+        var pathArray = location.href.split('/');
+        var protocol = pathArray[0];
+        var host = pathArray[2];
+        var url = protocol + '//' + host;
+
+        console.log(shareType)
+
+        var settings = {
+            "async": true,
+            "crossDomain": true,
+            "url": url + "/TimelineLogic/AddSocialShare?timelineId=" +@Model.TimelineId +"&timelineType=" + shareType,
+            "method": "GET",
+            "headers": {
+                "cache-control": "no-cache"
+            }
+        }
+
+        $.ajax(settings).done(function (response) {
+            console.log(response);
+        });
+    }
+
+    function submitFact() {
+         
+
+        var pathArray = location.href.split('/');
+        var protocol = pathArray[0];
+        var host = pathArray[2];
+        var url = protocol + '//' + host;
+
+
+        var event = $(".factText").text();
+
+        var date = $(".factDate").text();
+
+        var source = $(".factSource").text();
+
+        var modelID = $(".factModelId").text();
+
+        var factModelSlug = $(".factModelSlug").text();
+
+
+        console.log(shareType)
+
+        var settings = {
+            "async": true,
+            "crossDomain": true,
+            "url": url + "/Resource/AddTimelineFact?factText=" + event + "&factDate=" + date + "&timelineId=" + modelID + "&factSource=" + source + "&slug=" + factModelSlug,
+            "method": "POST",
+            "headers": {
+                "cache-control": "no-cache"
+            }
+        }
+
+        $.ajax(settings).done(function (response) {
+            console.log(response);
+        });
+    }
+
+</script>

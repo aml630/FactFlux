@@ -1,0 +1,9 @@
+﻿
+<h2>YouTubeTest</h2>
+
+@foreach(var vid in Model)
+{
+    <p>@vid.Title</p>
+    <img src="@vid.Thumbnail" />
+    <p>@vid.Url</p>
+}

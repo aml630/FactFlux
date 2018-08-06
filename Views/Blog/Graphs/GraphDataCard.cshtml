@@ -1,0 +1,29 @@
+﻿
+@{
+    Layout = null;
+}
+
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+@Styles.Render("~/GraphDataCard/css")
+@Scripts.Render("~/GraphDataCard/js")
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=0.6">
+
+<div class="wrapper">
+    <div class="graph">
+        <div class="head-box max"><i class="fa fa-bar-chart"></i></div>
+        <h2>What Do Americans Believe?</h2>
+        <p>Russia Was Definitely Behind The DNC Hacks </p>
+        <div class="bar" style="width: 72%;" id="bar-one">36%</div>
+        <p>Russia Was Probably Behind The DNC Hacks </p>
+
+        <div class="bar" style="width: 72%;" id="bar-two">36%</div>
+        <p>Russia Was Probably Not Behind The DNC Hacks </p>
+
+        <div class="bar"  style="width: 34%;" id="bar-three">17%</div>
+        <p>Russia Was Definitely Not Behind The DNC Hacks </p>
+
+        <div class="bar"  style="width: 14%" id="bar-four">7%</div>
+    </div>
+</div>

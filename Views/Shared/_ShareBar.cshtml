@@ -1,0 +1,110 @@
+﻿
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<link href="~/Content/NewCSS/ShareBar.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+
+
+<div class="shareBarParent">
+    <div class="ShareBar">
+        <a class="fb btn btn-danger customer share" href="https://www.facebook.com/sharer/sharer.php?u=example.org" target="_blank" onclick="incrementSocialShare('facebook')">
+            <i class="fa fa-facebook" aria-hidden="true"></i>
+
+            @if (Model is Timeline)
+            {
+                if (Model.FbShare == 0)
+                {
+
+                }
+                else if (Model.FbShare < 10)
+                {
+                    <p style="margin-top: 60px; margin-left:-4px;font-size: 18px;">@Model.FbShare</p>
+                }
+                else if (Model.FbShare < 99)
+                {
+                    <p style="margin-top: 60px; margin-left:-9px;font-size: 18px;">@Model.FbShare</p>
+                }
+                else
+                {
+                    <p style="font-size: 12px; margin-left: -9px;">@Model.FbShare</p>
+                }
+            }
+
+        </a>
+
+        <br />
+        <a class="tw btn btn-info customer share" href="https://twitter.com/intent/tweet/?url=hey" target="_blank" onclick="incrementSocialShare('twitter')">
+            <i class="fa fa-twitter" aria-hidden="true"></i>
+
+            @if (Model is Timeline)
+            {
+                if (Model.FbShare == 0)
+                {
+
+                }
+                else if (Model.FbShare < 10)
+                {
+                    <p style="margin-top: 60px; margin-left:-4px;font-size: 18px;">@Model.TwShare</p>
+                }
+                else if (Model.TwShare < 99)
+                {
+                    <p style="margin-top: 60px; margin-left:-9px;font-size: 18px;">@Model.TwShare</p>
+                }
+                else
+                {
+                    <p class="twShareCounter" style="font-size: 12px; margin-left: -9px;">@Model.TwShare</p>
+                }
+
+            }
+
+        </a>
+    </div>
+</div>
+
+<script>
+    ; (function ($) {
+
+        $.fn.customerPopup = function (e, intWidth, intHeight, blnResize) {
+
+            // Prevent default anchor event
+            e.preventDefault();
+
+            // Set values for window
+            intWidth = intWidth || '500';
+            intHeight = intHeight || '400';
+            strResize = (blnResize ? 'yes' : 'no');
+
+            // Set title and open popup with focus on it
+            var strTitle = ((typeof this.attr('title') !== 'undefined') ? this.attr('title') : 'Social Share'),
+                strParam = 'width=' + intWidth + ',height=' + intHeight + ',resizable=' + strResize,
+                objWindow = window.open(this.attr('href'), strTitle, strParam).focus();
+        }
+
+        /* ================================================== */
+
+        $(document).ready(function ($) {
+            $('.customer.share').on("click", function (e) {
+                $(this).customerPopup(e);
+            });
+        });
+
+    }(jQuery));
+
+
+    $(document).ready(function () {
+
+        var titleText = $("title").text();
+        var tweetUrl = "https://twitter.com/intent/tweet/?url=" + document.URL + "&text=" + titleText
+        $(".tw").attr('href', tweetUrl);
+
+        var fbUrl = "https://www.facebook.com/sharer/sharer.php?u=" + document.URL
+
+        $(".fb").attr('href', fbUrl);
+
+
+    });
+
+
+
+</script>

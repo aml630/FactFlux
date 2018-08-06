@@ -1,0 +1,427 @@
+﻿
+@{
+    ViewBag.Title = "Post1";
+}
+
+
+<title>Trumps Russian Love Affair: A Timeline</title>
+
+
+
+<form action="Resource/AddSingleLink">
+    <input name="title" />
+    <input name="link" />
+    <button>Add Link</button>
+</form>
+
+@section AddToHead{
+    <meta property="og:image" content="http://ichef.bbci.co.uk/wwfeatures/wm/live/1280_640/images/live/p0/3v/hv/p03vhv9x.jpg" />
+    <meta property="og:image:width" content="620" />
+    <meta property="og:image:height" content="541" />
+    <meta property="og:description" content="Lets Walk Through It Step By Step" />
+}
+
+<body>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    @Styles.Render("~/Post1/css")
+    @Scripts.Render("~/Post1/js")
+
+    @Html.Partial("_ShareBar")
+
+    <div style="background: linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url(http://ichef.bbci.co.uk/wwfeatures/wm/live/1280_640/images/live/p0/3v/hv/p03vhv9x.jpg) no-repeat fixed 50% 0; " id="banner">
+        <div id="bannertext">
+            <h1>Trumps Russian Love Affair</h1>
+            <h2>A Timeline</h2>
+        </div>
+    </div>
+
+    <div id="content"></div>
+    <section id="cd-timeline" class="cd-container">
+
+        @*<div class="cd-timeline-block">
+                <div class="cd-timeline-img cd-location">
+                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/148866/cd-icon-location.svg" alt="Picture">
+                </div> <!-- cd-timeline-img -->
+                <div class="cd-timeline-content Graph1Section">
+                    <h2>American Public sees Russian role in DNC campaign hacking</h2>
+                    <p>Click below to see results of a Pew Research study on Americans views on the hacking of the DNC and Hillary Clintons campaign for president.</p>
+                    <div class="TransparentBarGraphIframeCenter">
+                        <iframe class="TransparentBarGraphIframeProportions" scrolling="no" src="~/Posts/GraphDataCard"></iframe>
+                    </div>
+                    <a href="http://www.pewresearch.org/fact-tank/2017/01/10/u-s-public-says-russia-hacked-campaign/" class="cd-read-more">Read more</a>
+                    <span class="cd-date">January 2017</span>
+                </div> <!-- cd-timeline-content -->
+            </div> <!-- cd-timeline-block -->*@
+
+        @*<div class="cd-timeline-block">
+            <div class="fullScreenIframeDiv">
+                <iframe class="fullScreenIframe" scrolling="no" src="~/Blog/GraphDataCard"></iframe>
+            </div>
+            <div class="whiteBackground">
+
+            </div>
+        </div>*@
+
+        <div class="cd-timeline-block">
+            <div class="cd-timeline-img cd-picture">
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/148866/cd-icon-picture.svg" alt="Picture">
+            </div> <!-- cd-timeline-img -->
+            <div class="cd-timeline-content Graph1Section">
+                <h2>The man responsible for the dossier has gone into hiding.</h2>
+                <p>The former British intelligence officer who had a key role in drafting the dossier that alleged Russia holds compromising material and information on President-elect Donald Trump has gone into hiding</p>
+                <a href="https://www.washingtonpost.com/news/worldviews/wp/2017/01/12/this-former-british-spy-was-identified-as-the-trump-dossier-source-now-he-is-in-hiding/?utm_term=.2fafd8b59245" class="cd-read-more">Read more</a>
+                <span class="cd-date">January 2017</span>
+            </div> <!-- cd-timeline-content -->
+        </div> <!-- cd-timeline-block -->
+
+        <div class="cd-timeline-block">
+            <div class="cd-timeline-img cd-movie">
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/148866/cd-icon-movie.svg" alt="Picture">
+            </div> <!-- cd-timeline-img -->
+            <div class="cd-timeline-content Graph1Section">
+                <h2>Trump refuses to answer questions in regards to the BuzzFeed release</h2>
+                <p>At a press conference on Wednesday in Trump dismisses the dossier as fake news and refuses to answer questions relating to it.</p>
+                <div class="youtube-player" data-id="PZI0Q3LQZmo"></div>
+                <a href="#0" class="cd-read-more">Read more</a>
+                <span class="cd-date">January 2017</span>
+            </div> <!-- cd-timeline-content -->
+        </div> <!-- cd-timeline-block -->
+
+        <div class="cd-timeline-block">
+            <div class="cd-timeline-img cd-picture">
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/148866/cd-icon-picture.svg" alt="Picture">
+            </div> <!-- cd-timeline-img -->
+            <div class="cd-timeline-content Graph1Section">
+                <h2>BuzzFeed releases unsubstantiated claims about Trumps Russian ties</h2>
+                <p>BuzzFeed publishes a dossier chock full of sordid but unsubstantiated claims regarding Donald Trumps relationship to Russia. </p>
+                @Html.Partial("_QuoteBox", new ViewDataDictionary(ViewData) { { "Quote", "If we were to take this report at face value, half the people cited should be in prison. But we can't verify any of it, and so it might just be a story." }, { "Author", "Aki Peritz" } });
+                <a href="http://www.vox.com/conversations/2017/1/13/14240616/donald-trump-russia-putin-buzzfeed-intelligence-community" class="cd-read-more">Read more</a>
+                <span class="cd-date">January 2017</span>
+            </div> <!-- cd-timeline-content -->
+        </div> <!-- cd-timeline-block -->
+
+
+        <div class="cd-timeline-block">
+            <div class="cd-timeline-img cd-picture">
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/148866/cd-icon-picture.svg" alt="Picture">
+            </div> <!-- cd-timeline-img -->
+            <div class="cd-timeline-content Graph1Section">
+                <h2>Director of National Intelligence releases report on Russian campaign influence</h2>
+                <p>Director of National Intelligence James Clapper has stated that the intelligence community has become more "resolute" in its opinion that Russian intelligence was involved in the DNC hack</p>
+                <a href="http://www.nytimes.com/interactive/2017/01/06/us/politics/document-russia-hacking-report-intelligence-agencies.html" class="cd-read-more">Read more</a>
+                <span class="cd-date">January 2017</span>
+            </div> <!-- cd-timeline-content -->
+        </div> <!-- cd-timeline-block -->
+
+        <div class="cd-timeline-block">
+            <div class="cd-timeline-img cd-picture">
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/148866/cd-icon-picture.svg" alt="Picture">
+            </div> <!-- cd-timeline-img -->
+            <div class="cd-timeline-content Graph1Section">
+                <h2>WikiLeaks releases large batch of emails damaging to Hillary Clintons campaign</h2>
+                <p>The documents were released almost immediately after a video tape surfaced of Donald Trump claiming that his fame and fortunate allowed him to commit sexual assault without reprocussions.  It start to become likely that Russia was involved in the hacking and stealing of this information</p>
+                <a href="http://www.politico.com/story/2016/10/john-podesta-wikileaks-hacked-emails-229304" class="cd-read-more">Read more</a>
+                <span class="cd-date">October 2016</span>
+            </div> <!-- cd-timeline-content -->
+        </div> <!-- cd-timeline-block -->
+
+        <div class="cd-timeline-block">
+            <div class="cd-timeline-img cd-tweet">
+                <img src="https://www.productionsoft.com/images/twitter.png" alt="Picture">
+            </div> <!-- cd-timeline-img -->
+            <div class="cd-timeline-content Graph1Section">
+                <h2>Trump makes claim that Hillary Clinton has concerning Russian ties</h2>
+                <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">CLINTON’S CLOSE TIES TO PUTIN DESERVE SCRUTINY:<a href="https://t.co/wPYm5vQoyt">https://t.co/wPYm5vQoyt</a> <a href="https://twitter.com/hashtag/VPDebate?src=hash">#VPDebate</a></p>&mdash; Donald J. Trump (@@realDonaldTrump) <a href="https://twitter.com/realDonaldTrump/status/783490959027732484">October 5, 2016</a></blockquote>
+                <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+                <a href="#0" class="cd-read-more">Read more</a>
+                <span class="cd-date">October 2016</span>
+            </div> <!-- cd-timeline-content -->
+        </div> <!-- cd-timeline-block -->
+
+        <div class="cd-timeline-block">
+            <div class="cd-timeline-img cd-picture">
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/148866/cd-icon-picture.svg" alt="Picture">
+            </div> <!-- cd-timeline-img -->
+            <div class="cd-timeline-content Graph1Section">
+                <h2>Trump claims that Vladimir Putin is far better leader than U.S President Obama</h2>
+                <p>In an NBC interivew Trump is asked if he really wants to be complimented by a man who is trying to undermine American Foreign policy in key regions of a world.  Trump responds that, yes, he will still take the compliment</p>
+                <a href="http://www.newsweek.com/trump-putin-leader-far-more-obama-496475" class="cd-read-more">Read more</a>
+                <span class="cd-date">September 2016</span>
+            </div> <!-- cd-timeline-content -->
+        </div> <!-- cd-timeline-block -->
+
+        <div class="cd-timeline-block">
+            <div class="cd-timeline-img cd-picture">
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/148866/cd-icon-picture.svg" alt="Picture">
+            </div> <!-- cd-timeline-img -->
+            <div class="cd-timeline-content Graph1Section">
+                <h2>Trump claims Russia will not being going into Ukraine despite Russia having already done so</h2>
+                <p>Trump made a bold statement on CNN about how Russia will never be moving into Ukraine.  When told that Russia, in fact, already had Annexed Crimea from Ukraine he clarified that his statement only applied to a world in which he was president.</p>
+                <a href="http://www.cnn.com/2016/07/31/politics/donald-trump-russia-ukraine-crimea-putin/" class="cd-read-more">Read more</a>
+                <span class="cd-date">Augest 2016</span>
+            </div> <!-- cd-timeline-content -->
+        </div> <!-- cd-timeline-block -->
+
+        <div class="cd-timeline-block">
+            <div class="cd-timeline-img cd-movie">
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/148866/cd-icon-movie.svg" alt="Picture">
+            </div> <!-- cd-timeline-img -->
+            <div class="cd-timeline-content Graph1Section">
+                <h2>Trump denies having any reason to get involved with Putin and encourages more hacking</h2>
+                <div class="youtube-player" data-id="gNa2B5zHfbQ"></div>
+                <p>Despite past statements to the contrary, Trump says that he has never spoken to Vladimir Putin and knows nothing about him.   He goes onto request the Russia hackers go further and attempt to steal Hillary Clintons missing emails.</p>
+                <a href="#0" class="cd-read-more">Read more</a>
+                <span class="cd-date">July 2016</span>
+            </div> <!-- cd-timeline-content -->
+        </div> <!-- cd-timeline-block -->
+
+        <div class="cd-timeline-block">
+            <div class="cd-timeline-img cd-tweet">
+                <img src="https://www.productionsoft.com/images/twitter.png" alt="Picture">
+            </div> <!-- cd-timeline-img -->
+            <div class="cd-timeline-content Graph1Section">
+                <h2>Trump aggressively denies Russian involvement in the DNC hacking</h2>
+                <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">The new joke in town is that Russia leaked the disastrous DNC e-mails, which should never have been written (stupid), because Putin likes me</p>&mdash; Donald J. Trump (@@realDonaldTrump) <a href="https://twitter.com/realDonaldTrump/status/757538729170964481">July 25, 2016</a></blockquote>
+                <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+                <a href="#0" class="cd-read-more">Read more</a>
+                <span class="cd-date">July 2016</span>
+            </div> <!-- cd-timeline-content -->
+        </div> <!-- cd-timeline-block -->
+
+        <div class="cd-timeline-block">
+            <div class="cd-timeline-img cd-picture">
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/148866/cd-icon-picture.svg" alt="Picture">
+            </div> <!-- cd-timeline-img -->
+            <div class="cd-timeline-content Graph1Section">
+                <h2>Trump talks about how great it would be to have a good relationship with Russia</h2>
+                <p>In a conversation with Bill O'reilly Trump explains that he won't disavow Putin because of how advantagous it would be to have a good relationship with Russia.  He also says that Putin called him a genius.  </p>
+                <a href="http://www.foxnews.com/transcript/2016/04/29/donald-trump-on-his-foreign-policy-strategy/" class="cd-read-more">Read more</a>
+                <span class="cd-date">April 2016</span>
+            </div> <!-- cd-timeline-content -->
+        </div> <!-- cd-timeline-block -->
+
+        <div class="cd-timeline-block">
+            <div class="cd-timeline-img cd-picture">
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/148866/cd-icon-picture.svg" alt="Picture">
+            </div> <!-- cd-timeline-img -->
+            <div class="cd-timeline-content Graph1Section">
+                <h2>Trump claims to have no real relationship with Putin</h2>
+                <p>Trump at this point claims to have no relationship with Putin despite previous statements he's made to the conterary</p>
+                <a href="http://www.cnn.com/2016/07/28/politics/donald-trump-vladimir-putin-quotes/" class="cd-read-more">Read more</a>
+                <span class="cd-date">February 2016</span>
+            </div> <!-- cd-timeline-content -->
+        </div> <!-- cd-timeline-block -->
+
+        <div class="cd-timeline-block">
+            <div class="cd-timeline-img cd-picture">
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/148866/cd-icon-picture.svg" alt="Picture">
+            </div> <!-- cd-timeline-img -->
+            <div class="cd-timeline-content Graph1Section">
+                <h2>Trump accepts Putins compliments</h2>
+                <p>Donald Trump fully accepts Putins complements.  When questioned about Putins decisions to silence critical journalists Trump commented that "At least he's a leader, unlike what we have in this country"</p>
+                <a href="http://www.msnbc.com/morning-joe/watch/trump--putin-is-a-leader--unlike-our-president-588186691983" class="cd-read-more">Read more</a>
+                <span class="cd-date">January 14</span>
+            </div> <!-- cd-timeline-content -->
+        </div> <!-- cd-timeline-block -->
+
+        <div class="cd-timeline-block">
+            <div class="cd-timeline-img cd-picture">
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/148866/cd-icon-picture.svg" alt="Picture">
+            </div> <!-- cd-timeline-img -->
+            <div class="cd-timeline-content Graph1Section">
+                <h2>Putin encourages and compliments Trump during press conference.</h2>
+                <p>During a wide ranging news conference President Putin found time to flatter Trump, claiming he was the leader in the presidential race.  He went onto mention that Trump is a "very lively man" and he of course welcomes closer relations with the United States.</p>
+                <a href="https://www.washingtonpost.com/world/putin-no-major-gaps-with-washington-over-efforts-to-end-syria-conflict/2015/12/17/a178255e-a431-11e5-8318-bd8caed8c588_story.html?utm_term=.67707f7eebee" class="cd-read-more">Read more</a>
+                <span class="cd-date">December 2015</span>
+            </div> <!-- cd-timeline-content -->
+        </div> <!-- cd-timeline-block -->
+
+        <div class="cd-timeline-block">
+            <div class="cd-timeline-img cd-picture">
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/148866/cd-icon-picture.svg" alt="Picture">
+            </div> <!-- cd-timeline-img -->
+            <div class="cd-timeline-content Graph1Section">
+                <h2>Trump doesnt think Russia is to blame for HM17</h2>
+                <p>Trump says that despite the evidence that Russia was responsible for the destruction of a commercial airliner over Ukraine he isn't convinced they are at fault.  And even if they are, he goes on to say, the United States shouldn't be getting involved in things like that right now.</p>
+                <a href="http://www.cnn.com/2015/10/14/politics/donald-trump-mh17-plane-russians/" class="cd-read-more">Read more</a>
+                <span class="cd-date">October 2015</span>
+            </div> <!-- cd-timeline-content -->
+        </div> <!-- cd-timeline-block -->
+
+        <div class="cd-timeline-block">
+            <div class="cd-timeline-img cd-movie">
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/148866/cd-icon-movie.svg" alt="Picture">
+            </div> <!-- cd-timeline-img -->
+            <div class="cd-timeline-content Graph1Section">
+                <h2>Trump discusses a meeting and discussion he had with Putin</h2>
+                <p>Trump describes how pleasant his interaction was with Vladmir Putin</p>
+                <div class="youtube-player" data-id="dKkKQmbyECw"></div>
+                <p>Skip to 48.30</p>
+                <a href="http://www.motherjones.com/politics/2016/07/watch-trump-brag-of-speaking-to-vladimir-putin" class="cd-read-more">Read more</a>
+                <span class="cd-date">May 2014</span>
+            </div> <!-- cd-timeline-content -->
+        </div> <!-- cd-timeline-block -->
+
+        <div class="cd-timeline-block">
+            <div class="cd-timeline-img cd-tweet">
+                <img src="https://www.productionsoft.com/images/twitter.png" alt="Picture">
+            </div> <!-- cd-timeline-img -->
+            <div class="cd-timeline-content Graph1Section">
+                <h2>Trump shares his predictions for the future of Russia, and shares frusteration at perceived disrespect</h2>
+                <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">I believe Putin will continue to re-build the Russian Empire. He has zero respect for Obama or the U.S.!</p>&mdash; Donald J. Trump (@@realDonaldTrump) <a href="https://twitter.com/realDonaldTrump/status/447191888630927360">March 22, 2014</a></blockquote>
+                <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+                <p>On June 18th Donald Trump announced he would be bringing the Miss Universe Pageant to Moscow.  At the time, he owned the beauty pageant.  He claimed this would be a “big deal” and bring the two countries closer together.  Trump has gone on to describe this event as heavily influencing his opinion on Russia.</p>
+                <a href="#0" class="cd-read-more">Read more</a>
+                <span class="cd-date">March 2014</span>
+            </div> <!-- cd-timeline-content -->
+        </div> <!-- cd-timeline-block -->
+
+        <div class="cd-timeline-block">
+            <div class="cd-timeline-img cd-tweet">
+                <img src="https://www.productionsoft.com/images/twitter.png" alt="Picture">
+            </div> <!-- cd-timeline-img -->
+            <div class="cd-timeline-content Graph1Section">
+                <h2>Trump expresses hopes for a Putin visit to one of his events.</h2>
+                <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Do you think Putin will be going to The Miss Universe Pageant in November in Moscow - if so, will he become my new best friend?</p>&mdash; Donald J. Trump (@@realDonaldTrump) <a href="https://twitter.com/realDonaldTrump/status/347191326112112640">June 19, 2013</a></blockquote>
+                <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+                <a href="#0" class="cd-read-more">Read more</a>
+                <span class="cd-date">June 2013</span>
+            </div> <!-- cd-timeline-content -->
+        </div> <!-- cd-timeline-block -->
+
+        <div class="cd-timeline-block">
+            <div class="cd-timeline-img cd-tweet">
+                <img src="https://www.productionsoft.com/images/twitter.png" alt="Picture">
+            </div> <!-- cd-timeline-img -->
+            <div class="cd-timeline-content Graph1Section">
+                <h2>Trump tweets about perceived slights from Putins body language</h2>
+                <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Putin has no respect for our President --- really bad body language.</p>&mdash; Donald J. Trump (@@realDonaldTrump) <a href="https://twitter.com/realDonaldTrump/status/215206040449462272">June 19, 2012</a></blockquote>
+                <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+                <a href="#0" class="cd-read-more">Read more</a>
+                <span class="cd-date">June 2012</span>
+            </div> <!-- cd-timeline-content -->
+        </div> <!-- cd-timeline-block -->
+
+        <div class="cd-timeline-block">
+            <div class="cd-timeline-img cd-picture">
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/148866/cd-icon-picture.svg" alt="Picture">
+            </div> <!-- cd-timeline-img -->
+            <div class="cd-timeline-content Graph1Section">
+                <h2>Donald Trump writes a book.  In it he praises Putins plans for Russia</h2>
+                <p>Trump praised Putin while expressing frustration about Obamas handling of foreign policy.  </p>
+                @Html.Partial("_QuoteBox", new ViewDataDictionary(ViewData) { { "Quote", "I respect Putin and the Russians" }, { "Author", "Author" } });
+                <a href="https://books.google.com/books?id=Tp80hJFYqCMC&pg=PA95&lpg=PA95&dq=%22Putin+has+big+plans+for+Russia.+He+wants+to+edge+out%22&source=bl&ots=4oAikxHOf6&sig=qmOPOPauWboSueBAyye_nROS48g&hl=en&sa=X&ved=0ahUKEwjug4LD-cHPAhWFKWMKHfAuAnkQ6AEIJTAB#v=onepage&q=%22Putin%20has%20big%20plans%20for%20Russia.%20He%20wants%20to%20edge%20out%22&f=false" class="cd-read-more">Read more</a>
+                <span class="cd-date">2011</span>
+            </div> <!-- cd-timeline-content -->
+        </div> <!-- cd-timeline-block -->
+
+        <div class="cd-timeline-block">
+            <div class="cd-timeline-img cd-picture">
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/148866/cd-icon-picture.svg" alt="Picture">
+            </div> <!-- cd-timeline-img -->
+            <div class="cd-timeline-content Graph1Section">
+                <h2>Donald Jr. Discusses His Families Large Investments In Russia</h2>
+                <p>
+                    According to an account posted on eTurboNews at a real estate conference held in New York Donald Trump Jr. discussed how large his families investments were in Russia.  He mentioned how the Russians make up a disproportionately large section of the Trump assets.
+                </p>
+
+                @Html.Partial("_QuoteBox", new ViewDataDictionary(ViewData) { { "Quote", "We see a lot of money pouring in from Russia." }, { "Author", "Donald Trump Jr." } });
+                <a href="https://www.washingtonpost.com/politics/heres-what-we-know-about-donald-trump-and-his-ties-to-russia/2016/07/29/1268b5ec-54e7-11e6-88eb-7dda4e2f2aec_story.html?utm_term=.54fc7c25afaf" class="cd-read-more">Read more</a>
+                <span class="cd-date">October 2008</span>
+            </div> <!-- cd-timeline-content -->
+        </div> <!-- cd-timeline-block -->
+
+        <div class="cd-timeline-block">
+            <div class="cd-timeline-img cd-picture">
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/148866/cd-icon-picture.svg" alt="Picture">
+            </div> <!-- cd-timeline-img -->
+            <div class="cd-timeline-content Graph1Section">
+                <h2>Trump expresses hope for the future construction in Russia</h2>
+                <p>
+                    Speaking at a deposition, Trump talks about his future in Russia.  He said the meeting took place at Trump tower.
+                </p>
+                @Html.Partial("_QuoteBox", new ViewDataDictionary(ViewData) { { "Quote", "We will be in Moscow at some point." }, { "Author", "Donald Trump" } });
+                <a href="https://www.nytimes.com/2017/01/16/us/politics/donald-trump-russia-business.html" class="cd-read-more">Read more</a>
+                <span class="cd-date">Mid 2000s</span>
+            </div> <!-- cd-timeline-content -->
+        </div> <!-- cd-timeline-block -->
+
+        <div class="cd-timeline-block">
+            <div class="cd-timeline-img cd-picture">
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/148866/cd-icon-picture.svg" alt="Picture">
+            </div> <!-- cd-timeline-img -->
+            <div class="cd-timeline-content Graph1Section">
+                <h2>Trump Moscow negotiations never occured</h2>
+                <p>
+                    The Russian media files a report claiming that Trump never even engaged in negotiations for the Moscow hotels.
+                </p>
+                <a href="https://www.nytimes.com/2017/01/16/us/politics/donald-trump-russia-business.html" class="cd-read-more">Read more</a>
+                <span class="cd-date">Mid 2000s</span>
+            </div> <!-- cd-timeline-content -->
+        </div> <!-- cd-timeline-block -->
+
+        <div class="cd-timeline-block">
+            <div class="cd-timeline-img cd-picture">
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/148866/cd-icon-picture.svg" alt="Picture">
+            </div> <!-- cd-timeline-img -->
+            <div class="cd-timeline-content Graph1Section">
+                <h2>Trumps assitant claims he hasn't thought about Russia in awhile</h2>
+                <p>
+                    Donald Trumps personal assistant is quoted in the Moscow Times saying that construction in Russia isn't at the top of the project list.
+                </p>
+                @Html.Partial("_QuoteBox", new ViewDataDictionary(ViewData) { { "Quote", "“That’s way on the back, back, back burner. We haven’t thought about Moscow for some time.”" }, { "Author", "Trumps Personal Assistant" } });
+                <a href="https://www.nytimes.com/2017/01/16/us/politics/donald-trump-russia-business.html" class="cd-read-more">Read more</a>
+                <span class="cd-date">February 1998</span>
+            </div> <!-- cd-timeline-content -->
+        </div> <!-- cd-timeline-block -->
+
+        <div class="cd-timeline-block">
+            <div class="cd-timeline-img cd-picture">
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/148866/cd-icon-picture.svg" alt="Picture">
+            </div> <!-- cd-timeline-img -->
+            <div class="cd-timeline-content Graph1Section">
+                <h2>Trump announces building plan that never happens</h2>
+                <p>
+                    Donald Trump announces his plan to make a large investment in Russia to the tune of 250 Million.  The plan involves placing his name on a pair of luxury buildings.  These structures are never built.
+                </p>
+                <a href="https://www.nytimes.com/2017/01/16/us/politics/donald-trump-russia-business.html" class="cd-read-more">Read more</a>
+                <span class="cd-date">November 1996</span>
+            </div> <!-- cd-timeline-content -->
+        </div> <!-- cd-timeline-block -->
+
+
+        <div class="cd-timeline-block">
+            <div class="cd-timeline-img cd-picture">
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/148866/cd-icon-picture.svg" alt="Picture">
+            </div> <!-- cd-timeline-img -->
+            <div class="cd-timeline-content Graph1Section">
+                <h2>Trump laments how hard it is to do business with the Soviets</h2>
+                <p>
+                    Donald trump discusses the shutting down of the hotel project he had planned for Moscow.  He claimed it was too hard to own and have control over property in the Soviet Union.
+                </p>
+                @Html.Partial("_QuoteBox", new ViewDataDictionary(ViewData) { { "Quote", "in the Soviet Union, you don't own anything. It's hard to conjure up spending hundreds of millions of dollars on something and not own it." }, { "Author", "Donald Trump Jr." } });
+                <a href="https://www.nytimes.com/2017/01/16/us/politics/donald-trump-russia-business.html" class="cd-read-more">Read more</a>
+                <span class="cd-date">December 1988</span>
+            </div> <!-- cd-timeline-content -->
+        </div> <!-- cd-timeline-block -->
+
+
+        <div class="cd-timeline-block">
+            <div class="cd-timeline-img cd-picture">
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/148866/cd-icon-picture.svg" alt="Picture">
+            </div> <!-- cd-timeline-img -->
+            <div class="cd-timeline-content Graph1Section">
+                <h2>Donald and Ivana take a trip to Moscow and checkout potential build sites</h2>
+                <p>
+                    Donald and Ivana Trump travel to Moscow and stay in the Lenin Suite.  On their trip they spend time touring potential construction sites.
+                </p>
+                <a href="https://www.nytimes.com/2017/01/16/us/politics/donald-trump-russia-business.html" class="cd-read-more">Read more</a>
+                <span class="cd-date">July 1987</span>
+            </div> <!-- cd-timeline-content -->
+        </div> <!-- cd-timeline-block -->
+
+    </section> <!-- cd-timeline -->
+
+    @Html.Partial("_ShareFooter");
+</body>
+

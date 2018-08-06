@@ -1,0 +1,115 @@
+﻿@model List<FactFlux.Word>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="~/Content/Word/Index.css" rel="stylesheet" />
+
+<div class="questionDiv">
+    <i class="fa fa-question-circle"></i>
+</div>
+
+<div class="searchDiv">
+    <input class="searchInput" />
+    <i class="fa fa-search"></i>
+</div>
+
+<br />
+<div class="WordDescription">
+    <div class="key">
+
+        <i class="fa fa-book"></i>
+        <p>Number Of Mentions In Timeframe</p>
+    </div>
+</div>
+
+<div class="dateSort">
+    <a href="#" class="dateWords today">Today</a>
+    <a href="#" class="dateWords thisWeek">This Week</a>
+    <a href="#" class="dateWords thisMonth">This Month</a>
+    <a href="#" class="dateWords thisYear">This Year</a>
+</div>
+
+<div class="explaination">
+    <p>FactFlux looks at article titles from a wide range of publications to see how many times different words get mentioned within certain time frames.  </p><p>Click on one to see a timeline of all the article and video resources which include that word or phrase!</p>
+</div>
+
+@if (Request.IsAuthenticated && User.IsInRole("Admin"))
+{
+<form action="~/Word/CreateNewWordWithChild">
+    <h3>New Word</h3>
+    <label>New Phrase</label>
+    <input name="singleWord"/>
+    <label>Optional Child Word</label>
+    <input name="childWord" />
+    <button>Add new word</button>
+</form>
+
+}
+
+@if (Request.IsAuthenticated && User.IsInRole("Admin"))
+{
+    foreach (var word in Model)
+    {
+        <div class="adminView">
+
+            <button onclick="ban(@word.WordId)">Ban @word.Word1</button>
+            <input id="@word.WordId" />
+            <button>Add Child Word</button>
+        </div>
+    }
+    <script>
+
+    function ban(wordId) {
+
+        var pathArray = location.href.split('/');
+        var protocol = pathArray[0];
+        var host = pathArray[2];
+        var url = protocol + '//' + host;
+
+        var settings = {
+            "async": true,
+            "crossDomain": true,
+            "url": url + "/Word/Ban/?wordId=" + wordId,
+            "method": "POST",
+            "headers": {
+                "cache-control": "no-cache"
+            }
+        }
+
+        $.ajax(settings).done(function (response) {
+            console.log(response);
+        });
+    }
+    </script>
+
+}
+else
+{
+
+    <table class="wordTable">
+        <thead>
+            <tr>
+                <th><h1>Word</h1></th>
+                <th><h1>Daily Count</h1></th>
+                <th><h1>Weekly Count</h1></th>
+                <th><h1>Monthly Count</h1></th>
+                <th><h1>Yearly Count</h1></th>
+            </tr>
+        </thead>
+        <tbody class="wordTableBody">
+
+            @foreach (var word in Model)
+            {
+                <tr class="wordRow nonSearched singleWord" data-slug="@word.Slug" data-day="@word.DailyCount" data-week="@word.WeeklyCount" data-month="@word.MonthlyCount" data-year="@word.YearlyCount">
+                    <td class="letters">@word.Word1</td>
+                    <td>@word.DailyCount</td>
+                    <td>@word.WeeklyCount</td>
+                    <td>@word.MonthlyCount</td>
+                    <td>@word.YearlyCount</td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+
+    <div class="showMore">Show More</div>
+}

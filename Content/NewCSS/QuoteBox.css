@@ -1,0 +1,25 @@
+﻿
+
+.quoteWell {
+	margin-top: 90px;
+    margin-bottom: 30px !important;
+}
+
+.fa-quote-left {
+	color: #444;
+	background: #eee;
+	border: 2px solid #ccc;
+	padding: 10px 12px;
+	border-radius: 100%;
+	position: absolute;
+	top: 45px;
+	left: 42%;
+}
+
+.tweetThis {
+    margin-right: 30px !important;
+}
+
+.btnTweet {
+    margin-bottom: 30px;
+}

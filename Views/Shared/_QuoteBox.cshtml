@@ -1,0 +1,31 @@
+﻿@{
+    var Quote = ViewData["Quote"];
+    var Author = ViewData["Author"];
+}
+
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+<script src="~/Scripts/NewJS/QuoteBox.js"></script>
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="well quoteWell">
+                <i class="fa fa-quote-left fa-3x"></i>
+                <blockquote>
+                    <p class="quote lead">@Quote</p>
+                    <footer><cite class="author" title="author">@Author</cite></footer>
+                </blockquote>
+                <div class="btn-group pull-right tweetThis">
+                    @*<button class="btn btn-default btnReload">
+                        <i class="fa fa-refresh fa-2x"></i>
+                    </button>*@
+                    <a class="btn btn-default btnTweet" href="https://twitter.com/intent/tweet?text=Humankind%20cannot%20gain%20anything%20without%20first%20giving%20something%20in%20return.%20To%20obtain%2C%20something%20of%20equal%20value%20must%20be%20lost." target="_blank">
+                        <i class="fa fa-twitter fa-2x"></i>
+                    </a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

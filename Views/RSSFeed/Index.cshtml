@@ -1,0 +1,72 @@
+﻿@model List<RSSFeed>
+
+<h2>FeedList</h2>
+
+<form action="~/RSSFeed/Create">
+    <label>title</label>
+    <input name="title" />
+    <br />
+    <label>link</label>
+    <input name="link" />
+    <br />
+
+    <label>image</label>
+    <input name="image" />
+    <br />
+
+    <label>FeedType</label>
+    <br />
+
+    <input name="feedType" />
+
+    <button>Create Feed</button>
+</form>
+
+@foreach (var feed in Model)
+{
+    <div class="rssFeedSection">
+        <hr />
+        <h2>@feed.FeedTitle</h2>
+        <img src="@feed.SourceImage" height="50" width="50" />
+        <p>@feed.LastUpdated</p>
+        <h3>@feed.FeedType</h3>
+
+        @foreach (var article in feed.ArticleLinks.OrderByDescending(fd => fd.DatePublished).Take(20))
+        {
+        <p>@article.DatePublished + ": "+@article.ArticleLinkTitle</p>
+        }
+
+        <form action="~/RSSFeed/Update">
+            <label>title</label>
+            <input name="title" value="@feed.FeedTitle" />
+            <label>link</label>
+            <input name="link" value="@feed.FeedLink" />
+            <label>image</label>
+            <input name="image" value="@feed.SourceImage" />
+            <input hidden value="@feed.FeedId" name="RssId" />
+            <button>Update Feed</button>
+        </form>
+
+        <form action="~/Word/CheckFeedsForWords">
+            <input name="feedToSearch" hidden value="@feed.FeedId" />
+            <button>Get New Links For Feed</button>
+        </form>
+
+
+
+        @*<form action="~/RSSFeed/Delete">
+            <input hidden value="@feed.FeedId" name="id" />
+            <button>Delete Feed</button>
+        </form>*@
+    </div>
+}
+
+<style>
+    .ShareBar {
+        display:none;
+    }
+
+    .rssFeedSection {
+        border: 5px solid black;
+    }
+</style>

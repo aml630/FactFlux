@@ -1,0 +1,145 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+@Html.Partial("_ShareBar")
+
+<title>FactFlux: Watch the story evolve</title>
+@section AddToHead{
+    @*<meta property="og:image" content="http://www.factflux.com/@Model.TimelineImage" />*@
+    <meta property="og:url" content=document.URL />
+    <meta property="og:title" content="FactFlux: Watch the story evolve" />
+    <meta property="fb:app_id" content="105543586755908" />
+    <meta property="og:image:width" content="620" />
+    <meta property="og:image:height" content="541" />
+    <meta property="og:description" content="Lets walk through it step by step" />
+}
+
+<h1 class="timelinesHeader">Timelines</h1>
+
+<div class="marginTop"></div>
+
+@if (Request.IsAuthenticated && User.IsInRole("Admin"))
+{
+    <div class="admin">
+        <form action="~/Resource/CheckFeedsForResources">
+            <button class="btn btn-success">Pull down links from feeds</button>
+        </form>
+
+        <form action="~/TimelineLogic/AddTimeline">
+            <label>title</label>
+            <input name="title" />
+            <label>image</label>
+            <input name="image" />
+            <label>slug</label>
+            <input name="slug" />
+            <button>Add timeline</button>
+        </form>
+    </div>
+}
+
+<div class="flexBox">
+    @foreach (var timeline in Model)
+    {
+        if (timeline.Active)
+        {
+            <a href="~/timeline/@timeline.TimelineSlug">
+                <div class="blog-card" style="background: url(@timeline.TimelineImage) center no-repeat;">
+                    <div class="title-content">
+                        <h3>@timeline.TimelineTitle</h3>
+                        <div class="intro"> <a href="#"></a> </div>
+                    </div>
+                    <div class="card-info">
+
+                        <i class="fa fa-newspaper-o" aria-hidden="true" style="margin-right: 5px;"></i>Post Count:  @Html.Action("ArticleCount", "Home", new { timelineID = timeline.TimelineId })
+                        <br />
+                        <i class="fa fa-clock-o" aria-hidden="true" style="margin-right: 5px;"></i>Last Updated @timeline.LastUpdated
+
+                    </div>
+                    <div class="gradient-overlay"></div>
+                    <a href="~/timeline/@timeline.TimelineSlug"> <div class="color-overlay"></div></a>
+                </div>
+            </a>
+
+            if (User.IsInRole("Admin"))
+            {
+                <div class="admin">
+
+                    @if (timeline.Active)
+                    {
+                        <form action="TimelineLogic/UnPublishTimeline">
+                            <input hidden value="@timeline.TimelineId" name="timelineId" />
+                            <button class="btn btn-info">UnPublish</button>
+                        </form>
+                    }
+                    @if (!timeline.Active)
+                    {
+                        <form action="~/TimelineLogic/PublishTimeline">
+                            <input hidden value="@timeline.TimelineId" name="timelineId" />
+                            <button class="btn btn-success">Publish</button>
+                        </form>
+                    }
+
+                    <form action="~/TimelineLogic/DeleteTimeline">
+                        <input hidden value="@timeline.TimelineId" name="timelineId" />
+                        <button class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this?')">Delete</button>
+                    </form>
+
+
+                </div>
+            }       
+        }
+
+        if (User.IsInRole("Admin") && (!timeline.Active))
+        {
+            <a class="admin" href="~/timeline/@timeline.TimelineSlug">
+                <div class="blog-card admin" style="background: url(@timeline.TimelineImage) center no-repeat;">
+                    <div class="title-content admin">
+                        <h3>@timeline.TimelineTitle</h3>
+                        <div class="intro"> <a href="#"></a> </div>
+                    </div>
+                    <div class="card-info">
+
+                        <i class="fa fa-newspaper-o" aria-hidden="true" style="margin-right: 5px;"></i>Post Count:  @Html.Action("ArticleCount", "Home", new { timelineID = timeline.TimelineId })
+                        <br />
+                        <i class="fa fa-clock-o" aria-hidden="true" style="margin-right: 5px;"></i>Last Updated @timeline.LastUpdated
+
+                    </div>
+
+
+                    <div class="gradient-overlay"></div>
+                    <a href="~/timeline/@timeline.TimelineSlug"> <div class="color-overlay"></div></a>
+                </div>
+            </a>
+            <div class="admin">
+
+                @if (timeline.Active)
+                {
+                    <form action="TimelineLogic/UnPublishTimeline">
+                        <input hidden value="@timeline.TimelineId" name="timelineId" />
+                        <button class="btn btn-info">UnPublish</button>
+                    </form>
+                }
+                @if (!timeline.Active)
+                {
+                    <form action="~/TimelineLogic/PublishTimeline">
+                        <input hidden value="@timeline.TimelineId" name="timelineId" />
+                        <button class="btn btn-success">Publish</button>
+                    </form>
+                }
+
+                <form action="~/TimelineLogic/DeleteTimeline">
+                    <input hidden value="@timeline.TimelineId" name="timelineId" />
+                    <button class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this?')">Delete</button>
+                </form>
+
+
+            </div>
+        }
+    }
+</div>
+
+@Html.Partial("_ShareFooter")
+
+<style>
+
+</style>

@@ -1,0 +1,68 @@
+﻿.searchDiv {
+    text-align: center;
+}
+
+.searchInput {
+    border-radius: 15px;
+    width: 300px;
+    height: 25px;
+    margin-top: 10px;
+    margin-bottom: 16px;
+}
+
+.sortButtons {
+    display: flex;
+    justify-content: center;
+}
+
+    .sortButtons div {
+        font-family: 'Diplomata SC', cursive;
+        font-size: 13px;
+        background-color: white;
+        padding: 5px;
+        margin: 5px;
+        color: black;
+        border-radius: 15px;
+        justify-content: center;
+        border: 3px solid black;
+        font-weight: bold;
+    }
+
+
+.centerText {
+    text-align: center;
+}
+
+    .centerText h3 {
+        font-family: 'Diplomata SC', cursive;
+        font-weight: bold;
+        color: black;
+        font-size: 35px;
+    }
+
+.inActive {
+    color: grey !important;
+    border: 3px solid grey !important;
+}
+
+.hideVid {
+    display: none;
+}
+
+.hideArticle {
+    display: none;
+}
+
+.hideSearch {
+    display: none;
+}
+
+@media (max-width: 450px) {
+    .centerText h3 {
+        font-size: 20px;
+    }
+
+    .searchInput {
+        width:150px;
+    }
+}
