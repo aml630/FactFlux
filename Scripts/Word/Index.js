@@ -78,7 +78,6 @@ $(".thisYear").click(function () {
     $(".dateWords").removeClass("dateWordsActive");
     $(".thisYear").addClass("dateWordsActive");
     paginate(-1);
-
 })
 
 $(".questionDiv").click(function () {
