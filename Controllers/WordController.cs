@@ -37,6 +37,24 @@ namespace FactFlux.Controllers
             }
         }
 
+        public ActionResult MostDiscussed()
+        {
+            using (FactFluxEntities db = new FactFluxEntities())
+            {
+                var wordListWithDailyCount = db.Words
+                                            .Where(x => x.Banned == false &&
+                                            !db.ParentWords.Select(y => y.ChildWordId).Contains(x.WordId) && (
+                                               x.DailyCount > 2
+                                            || x.WeeklyCount > 5
+                                            || x.MonthlyCount > 10
+                                            || x.YearlyCount > 15))
+                                            .OrderByDescending(x => x.DailyCount)
+                                            .Take(20).ToList();
+
+                return View("Front", wordListWithDailyCount);
+            }
+        }
+
         private static List<GetWordsWithCount_Result> GetWordsWithCountInternal(string timeFrame)
         {
             DateTime AddedSinceDate = DateTime.Now;

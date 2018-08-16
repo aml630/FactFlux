@@ -80,6 +80,19 @@
       
         </div>*@
     </div>
+    <footer>
+        <div class="layoutFooter">
+            <span>FAQ</span>
+            <i class="far fa-circle"></i>
+
+
+            <span>Privacy Policy</span>
+            <i class="far fa-circle"></i>
+
+
+            <i class="fa fa-twitter" aria-hidden="true"></i>
+        </div>
+    </footer>
 
 </body>
 
@@ -90,21 +103,26 @@
 
 
 <style>
-    .mainAndSidebar {
+
+    .layoutFooter {
+        background-color: black;
+        height: 100px;
+        color: mediumaquamarine;
+    } .mainAndSidebar {
         display: flex;
         width: 100%;
     }
 
     .main {
-        /*width: calc(100% - 220px);*/
+
+        margin-left: 50px;
         width: 100%;
-        margin-left: 300px;
-        margin-right: 300px;
+        /*margin-right: 150px;
         background-color: white;
         box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
         margin-top: 20px;
         border-radius: 15px;
-        min-width:433px;
+        min-width:433px;*/
     }
 
     .sideBar {
@@ -133,11 +151,11 @@
 
     @@media screen and (max-width: 857px) {
 
-        .main {
+        /*.main {
             margin-left: 200px;
             margin-right: 200px;
             width: 90%;
-        }
+        }*/
         .sideBar {
             display: none;
         }
@@ -147,11 +165,11 @@
 
     @@media screen and (max-width: 857px) {
 
-        .main {
+        /*.main {
             margin-left: 100px;
             margin-right: 200px;
             width: 90%;
-        }
+        }*/
 
         .sideBar {
             display: none;
@@ -161,7 +179,7 @@
 
     @@media screen and (max-width: 557px) {
 
-        .main {
+        /*.main {
             width: 100%;
             margin-left: 30px;
             margin-right: 30px;
@@ -170,7 +188,7 @@
             margin-top: 20px;
             border-radius: 15px;
             min-width: 0px;
-        }
+        }*/
 
         .sideBar {
             display: none;

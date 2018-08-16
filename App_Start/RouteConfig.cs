@@ -14,9 +14,9 @@ namespace FactFlux
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
                             routes.MapRoute(
-                name: "HomePageWordsInNews",
+                name: "MostDiscussed",
                 url: "",
-                defaults: new { controller = "Word", action = "WordsInTheNews" }
+                defaults: new { controller = "Word", action = "MostDiscussed" }
                 );
 
 
