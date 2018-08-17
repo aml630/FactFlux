@@ -14,7 +14,10 @@
 </div>
 
 <style>
-    .mostDiscussed {
+
+    .timeFrames {
+        border: none;
+    } .mostDiscussed {
         margin-top: 30px;
         text-align: center;
     }
@@ -73,11 +76,13 @@
         var sortBy = $(this).val();
         console.log(sortBy)
 
+       
         var items = $('.survey-item');
+
         items.sort(function (a, b) {
             return +$(b).data(sortBy) - +$(a).data(sortBy);
         });
-        items.appendTo('.grid');
+        items.appendTo('.grid').hide().slideDown('slow');
     })
 
 </script>
