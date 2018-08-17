@@ -44,10 +44,7 @@ namespace FactFlux.Controllers
                 var wordListWithDailyCount = db.Words
                                             .Where(x => x.Banned == false &&
                                             !db.ParentWords.Select(y => y.ChildWordId).Contains(x.WordId) && (
-                                               x.DailyCount > 2
-                                            || x.WeeklyCount > 5
-                                            || x.MonthlyCount > 10
-                                            || x.YearlyCount > 15))
+                                               x.DailyCount > 2))
                                             .OrderByDescending(x => x.DailyCount)
                                             .Take(20).ToList();
 
@@ -609,7 +606,47 @@ namespace FactFlux.Controllers
         {
             using (FactFluxEntities db = new FactFluxEntities())
             {
-                var listOfWords = db.Words.Where(x => x.Word1.Contains(containsLetters) && x.Banned == false & x.DailyCount != null).Select(x => new ApiWordInfo() { Word = x.Word1, Slug = x.Slug, DailyCount = x.DailyCount.Value, WeeklyCount = x.WeeklyCount.Value, MonthlyCount = x.MonthlyCount.Value, YearlyCount = x.YearlyCount.Value }).Take(50).ToList();
+                var listOfWords = db.Words.Where(x => x.Word1.Contains(containsLetters) 
+                && x.Banned == false 
+                & x.DailyCount != null)
+                .Select(x => new ApiWordInfo()
+                { Word = x.Word1, Slug = x.Slug, DailyCount = x.DailyCount.Value, WeeklyCount = x.WeeklyCount.Value, MonthlyCount = x.MonthlyCount.Value, YearlyCount = x.YearlyCount.Value }).Take(50).ToList();
+
+                var json = JsonConvert.SerializeObject(listOfWords);
+
+                return json;
+            }
+        }
+
+        public string GetWeeklyWords(int timeFrame)
+        {
+            using (FactFluxEntities db = new FactFluxEntities())
+            {
+                var listOfWords = db.Words.Where(x => x.Banned == false)
+                .Select(x => new ApiWordInfo()
+                { Word = x.Word1, Slug = x.Slug, DailyCount = x.DailyCount.Value, WeeklyCount = x.WeeklyCount.Value, MonthlyCount = x.MonthlyCount.Value, YearlyCount = x.YearlyCount.Value });
+                
+                if(timeFrame == 1)
+                {
+                    listOfWords.Where(x => x.DailyCount != null).OrderByDescending(x => x.DailyCount);
+                }
+
+                if (timeFrame == 2)
+                {
+                    listOfWords.Where(x => x.WeeklyCount != null).OrderByDescending(x => x.WeeklyCount);
+                }
+
+                if (timeFrame == 3)
+                {
+                    listOfWords.Where(x => x.MonthlyCount != null).OrderByDescending(x => x.MonthlyCount);
+                }
+
+                if (timeFrame == 4)
+                {
+                    listOfWords.Where(x => x.YearlyCount != null).OrderByDescending(x => x.YearlyCount);
+                }
+
+                listOfWords.Take(20).ToList();
 
                 var json = JsonConvert.SerializeObject(listOfWords);
 
