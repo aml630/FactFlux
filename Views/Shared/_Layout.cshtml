@@ -30,43 +30,49 @@
     <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                @*<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>*@
 
-                <a href="~/" class="headerTitle">FactFlux <span class="headerTxt">Watch News Evolve</span></a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
+    <div class="factFluxHeader">
 
-                    @*<li>@Html.ActionLink("Contact", "Contact", "Home")</li>*@
-                    @if (Request.IsAuthenticated && User.IsInRole("Admin"))
-                    {
-                        <li><form action="~/Word/CheckFeedsForWords"><button>Get Next Feed</button></form></li>
-                        <li><form action="~/Word/ReRunWordCounts"><button>Build Count Tables</button></form></li>
-                    <li><a href="~/RSSfeed/index">RSS FEEDS</a></li>
-                                @Html.Partial("_LoginPartial")
-                    }
-                </ul>
+        <div class="headerHolder">
 
+            <a href="~/" class="headerTitle">FactFlux <span class="headerTxt">Watch News Evolve</span></a>
+
+            <div class="buttonGroup">
+                <div class="headerButton">
+                    <a href="#">About</a>
+                </div>
+
+                <div class="headerButton">
+                    <a href="https://twitter.com/factflux">
+                        <i class="fa fa-twitter headerTwitter" aria-hidden="true"></i>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
+
+
+    @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+    {
+        <form action="~/Word/CheckFeedsForWords"><button>Get Next Feed</button></form>
+        <form action="~/Word/ReRunWordCounts"><button>Build Count Tables</button></form>
+        <a href="~/RSSfeed/index">RSS FEEDS</a>
+        @Html.Partial("_LoginPartial")
+    }
+
+
+
+
     <div class="mainAndSidebar">
         <div class="main">
-                @RenderBody()
-                <hr />
-                <footer>
-                    @if (IsSectionDefined("AddToFooter"))
-                     {
-                        @RenderSection("AddToFooter", required: false)
-                    }
-                </footer>
+            @RenderBody()
+            <hr />
+            <footer>
+                @if (IsSectionDefined("AddToFooter"))
+                {
+                    @RenderSection("AddToFooter", required: false)
+                }
+            </footer>
 
             @Scripts.Render("~/bundles/jquery")
             @Scripts.Render("~/bundles/bootstrap")
@@ -77,20 +83,17 @@
             <script src="~/Scripts/Timeline/Timeline.js"></script>
         </div>
         @*<div class="sideBar">
-      
-        </div>*@
+
+            </div>*@
     </div>
     <footer>
         <div class="layoutFooter">
-            <span>FAQ</span>
-            <i class="far fa-circle"></i>
 
-
-            <span>Privacy Policy</span>
-            <i class="far fa-circle"></i>
-
-
-            <i class="fa fa-twitter" aria-hidden="true"></i>
+            <div class="centerTwitter">
+                <a href="https://twitter.com/factflux">
+                    <i class="fa fa-twitter footerTwitter" aria-hidden="true"></i>
+                </a>
+            </div>
         </div>
     </footer>
 
@@ -103,26 +106,68 @@
 
 
 <style>
+    .headerTwitter {
+        font-size: 20px;
+    }
+
+    .buttonGroup {
+        display:inline-flex;
+    }
+
+    .headerHolder {
+        display: flex;
+        flex-wrap: wrap;
+        padding-top: 10px;
+        justify-content: space-around;
+    }
+
+    .factFluxHeader {
+        height: 70px;
+        width: 100%;
+        background-color: black;
+        margin-top: -50px;
+    }
+
+    .headerButton {
+        border-radius: 15px;
+        text-align: center;
+        margin-left:10px;
+        margin-top:15px;
+        border: 3px solid white;
+
+        padding-top:5px;
+        width: 70px;
+        height:30px;
+    }
+
+    .headerButton:hover {
+    }
+
+    .headerSpace {
+        margin-left: 50px;
+    }
+
+    .centerTwitter {
+        width: 100%;
+        text-align: center;
+        margin-top: 20px;
+        font-size: 50px;
+    }
 
     .layoutFooter {
         background-color: black;
-        height: 100px;
+        height: 80px;
         color: mediumaquamarine;
-    } .mainAndSidebar {
+    }
+
+    .mainAndSidebar {
         display: flex;
         width: 100%;
     }
 
     .main {
-
         margin-left: 100px;
         width: 100%;
-        /*margin-right: 150px;
-        background-color: white;
-        box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
-        margin-top: 20px;
-        border-radius: 15px;
-        min-width:433px;*/
     }
 
     .sideBar {
@@ -137,7 +182,7 @@
         top: 70px;
         right: 0;
         overflow-x: hidden;
-        margin-right:20px;
+        margin-right: 20px;
     }
 
         .sideBar a img {
@@ -151,26 +196,13 @@
 
     @@media screen and (max-width: 857px) {
 
-        /*.main {
-            margin-left: 200px;
-            margin-right: 200px;
-            width: 90%;
-        }*/
         .sideBar {
             display: none;
         }
- 
-}
+    }
 
 
     @@media screen and (max-width: 857px) {
-
-        /*.main {
-            margin-left: 100px;
-            margin-right: 200px;
-            width: 90%;
-        }*/
-
         .sideBar {
             display: none;
         }
@@ -179,17 +211,6 @@
 
     @@media screen and (max-width: 557px) {
 
-        /*.main {
-            width: 100%;
-            margin-left: 30px;
-            margin-right: 30px;
-            background-color: white;
-            box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
-            margin-top: 20px;
-            border-radius: 15px;
-            min-width: 0px;
-        }*/
-
         .sideBar {
             display: none;
         }
@@ -197,7 +218,6 @@
         html, body {
             max-width: 100% !important;
             overflow-x: hidden !important;
-        } 
+        }
     }
-
 </style>

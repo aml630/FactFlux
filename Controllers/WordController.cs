@@ -41,14 +41,31 @@ namespace FactFlux.Controllers
         {
             using (FactFluxEntities db = new FactFluxEntities())
             {
-                var wordListWithDailyCount = db.Words
-                                            .Where(x => x.Banned == false &&
-                                            !db.ParentWords.Select(y => y.ChildWordId).Contains(x.WordId) && (
-                                               x.DailyCount > 2))
-                                            .OrderByDescending(x => x.DailyCount)
-                                            .Take(20).ToList();
+                //var wordsToChoose = db.Words.Where(x => x.Banned == false &&
+                //                            !db.ParentWords.Select(y => y.ChildWordId).Contains(x.WordId));
 
-                return View("Front", wordListWithDailyCount);
+
+                //var topDaily = wordsToChoose.Where(x => x.DailyCount > 2).OrderByDescending(x => x.DailyCount).Take(20).ToList();
+
+                //var topWeekly = wordsToChoose.Where(x => x.WeeklyCount > 5).OrderByDescending(x => x.DailyCount).Take(20).ToList();
+
+                //var topMonthly = wordsToChoose.Where(x => x.MonthlyCount > 15).OrderByDescending(x => x.DailyCount).Take(20).ToList();
+
+                //var topYearly = wordsToChoose.Where(x => x.YearlyCount > 111).OrderByDescending(x => x.DailyCount).Take(20).ToList();
+
+                //topDaily.AddRange(topWeekly);
+                //topDaily.AddRange(topMonthly);
+
+                //topDaily.AddRange(topYearly);
+
+                var topDaily = db.Words
+                              .Where(x => x.Banned == false &&
+                              !db.ParentWords.Select(y => y.ChildWordId).Contains(x.WordId) && (
+                                 x.DailyCount > 2))
+                              .OrderByDescending(x => x.DailyCount).Take(20)
+                              .ToList();
+
+                return View("Front", topDaily);
             }
         }
 
@@ -618,37 +635,37 @@ namespace FactFlux.Controllers
             }
         }
 
-        public string GetWeeklyWords(int timeFrame)
+        public string GetTimeFrameWords(int timeFrame)
         {
             using (FactFluxEntities db = new FactFluxEntities())
             {
-                var listOfWords = db.Words.Where(x => x.Banned == false)
-                .Select(x => new ApiWordInfo()
-                { Word = x.Word1, Slug = x.Slug, DailyCount = x.DailyCount.Value, WeeklyCount = x.WeeklyCount.Value, MonthlyCount = x.MonthlyCount.Value, YearlyCount = x.YearlyCount.Value });
+                var listOfWords = db.Words.Where(x => x.Banned == false);
+          
                 
                 if(timeFrame == 1)
                 {
-                    listOfWords.Where(x => x.DailyCount != null).OrderByDescending(x => x.DailyCount);
+                    listOfWords = listOfWords.Where(x => x.DailyCount != null).OrderByDescending(x => x.DailyCount);
                 }
 
                 if (timeFrame == 2)
                 {
-                    listOfWords.Where(x => x.WeeklyCount != null).OrderByDescending(x => x.WeeklyCount);
+                    listOfWords = listOfWords.Where(x => x.WeeklyCount != null).OrderByDescending(x => x.WeeklyCount);
                 }
 
                 if (timeFrame == 3)
                 {
-                    listOfWords.Where(x => x.MonthlyCount != null).OrderByDescending(x => x.MonthlyCount);
+                    listOfWords = listOfWords.Where(x => x.MonthlyCount != null).OrderByDescending(x => x.MonthlyCount);
                 }
 
                 if (timeFrame == 4)
                 {
-                    listOfWords.Where(x => x.YearlyCount != null).OrderByDescending(x => x.YearlyCount);
+                    listOfWords = listOfWords.Where(x => x.YearlyCount != null).OrderByDescending(x => x.YearlyCount);
                 }
 
-                listOfWords.Take(20).ToList();
+                var listToSend = listOfWords.Take(20).Select(x => new ApiWordInfo()
+                { Word = x.Word1, Slug = x.Slug, DailyCount = x.DailyCount.Value, WeeklyCount = x.WeeklyCount.Value, MonthlyCount = x.MonthlyCount.Value, YearlyCount = x.YearlyCount.Value }).ToList();
 
-                var json = JsonConvert.SerializeObject(listOfWords);
+                var json = JsonConvert.SerializeObject(listToSend);
 
                 return json;
             }
