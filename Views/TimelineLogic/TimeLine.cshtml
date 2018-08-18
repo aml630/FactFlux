@@ -26,10 +26,14 @@
         <input class="searchInput" />
         <i class="fa fa-search"></i>
     </div>
-    <div class="sortButtons">
-        <div class="toggleVids">Videos</div>
-        <div class="toggleArticles">Articles</div>
-    </div>
+
+    @if (Model.Where(x=>x.RSSFeed.FeedType == "YouTube").Count() > 0)
+    {
+        <div class="sortButtons">
+            <div class="toggleVids">Videos</div>
+            <div class="toggleArticles">Articles</div>
+        </div>
+    }
 
     <section id="cd-timeline" class="cd-container">
         @foreach (var item in Model)
@@ -59,5 +63,4 @@
     </section> <!-- cd-timeline -->
 
 </body>
-
 

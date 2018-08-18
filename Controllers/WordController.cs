@@ -12,7 +12,8 @@ using System.Threading.Tasks;
 using System.Data.Entity.Validation;
 using System.Web.Script.Serialization;
 using Newtonsoft.Json;
-
+using System.Web.Helpers;
+using System.IO;
 
 namespace FactFlux.Controllers
 {
@@ -41,23 +42,6 @@ namespace FactFlux.Controllers
         {
             using (FactFluxEntities db = new FactFluxEntities())
             {
-                //var wordsToChoose = db.Words.Where(x => x.Banned == false &&
-                //                            !db.ParentWords.Select(y => y.ChildWordId).Contains(x.WordId));
-
-
-                //var topDaily = wordsToChoose.Where(x => x.DailyCount > 2).OrderByDescending(x => x.DailyCount).Take(20).ToList();
-
-                //var topWeekly = wordsToChoose.Where(x => x.WeeklyCount > 5).OrderByDescending(x => x.DailyCount).Take(20).ToList();
-
-                //var topMonthly = wordsToChoose.Where(x => x.MonthlyCount > 15).OrderByDescending(x => x.DailyCount).Take(20).ToList();
-
-                //var topYearly = wordsToChoose.Where(x => x.YearlyCount > 111).OrderByDescending(x => x.DailyCount).Take(20).ToList();
-
-                //topDaily.AddRange(topWeekly);
-                //topDaily.AddRange(topMonthly);
-
-                //topDaily.AddRange(topYearly);
-
                 var topDaily = db.Words
                               .Where(x => x.Banned == false &&
                               !db.ParentWords.Select(y => y.ChildWordId).Contains(x.WordId) && (
@@ -88,6 +72,41 @@ namespace FactFlux.Controllers
         public string WakeUp()
         {
             return "I'm awake jeese";
+        }
+
+        public ActionResult AddImageToWord (int wordId, HttpPostedFileBase imageFile)
+        {
+            using (FactFluxEntities db = new FactFluxEntities())
+            {
+               var getWord =  db.Words.Where(x => x.WordId == wordId).FirstOrDefault();
+                getWord.Image = UploadImage(imageFile);
+                db.SaveChanges();
+            }
+
+            return Redirect(Request.UrlReferrer.ToString());
+        }
+
+        [HttpPost]
+        public string UploadImage(HttpPostedFileBase imageFile)
+        {
+            string filePresentLocation = "";
+
+            if (imageFile != null && imageFile.ContentLength > 0)
+            {
+                WebImage img = new WebImage(imageFile.InputStream);
+
+                img.Resize(600, 400);
+
+                var savePath = AppDomain.CurrentDomain.BaseDirectory + "/Content/Images/WordImages/";
+
+                string filePath = Path.Combine(savePath, Path.GetFileName(imageFile.FileName));
+
+                img.Save(filePath);
+
+                filePresentLocation = "/Content/Images/WordImages/" + imageFile.FileName;
+            }
+
+            return filePresentLocation;
         }
 
         private static DateTime ChangedAddedSince(string timeFrame, DateTime AddedSinceDate)

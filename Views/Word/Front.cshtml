@@ -25,37 +25,65 @@
 </div>
 
 
-    <ul class="surveys grid wordTableBody">
+<ul class="surveys grid wordTableBody">
 
-        @foreach (var word in Model)
-        {
-            <li class="survey-item original" data-slug="@word.Slug" data-day="@word.DailyCount" data-week="@word.WeeklyCount" data-month="@word.MonthlyCount" data-year="@word.YearlyCount">
+    @foreach (var word in Model)
+    {
+        <li class="survey-item original" data-slug="@word.Slug" data-day="@word.DailyCount" data-week="@word.WeeklyCount" data-month="@word.MonthlyCount" data-year="@word.YearlyCount">
+
+            @if (!string.IsNullOrEmpty(word.Image))
+            {
+                <div class="topWord">
+                    <span class="survey-name">
+                        @word.Word1
+                    </span>
+                    <img class="wordImg" src="~/@word.Image" />
+                </div>
+            }
+            else
+            {
                 <span class="survey-name">
                     @word.Word1
                 </span>
-                <div class="pull-right">
-                    <span class="dailyCount">
-                        Daily Count: @word.DailyCount
-                    </span>
-                    <span class="AllCount">
-                        Daily: @word.DailyCount Monthly:@word.MonthlyCount Yearly:@word.YearlyCount
-                    </span>
-                </div>
-            </li>
+            }
+
+            <div class="pull-right">
+                <span class="dailyCount">
+                <i class="fa fa-calendar" aria-hidden="true"></i>
+                    Daily Count: @word.DailyCount
+                </span>
+                <span class="AllCount">
+                    Daily: @word.DailyCount Monthly:@word.MonthlyCount Yearly:@word.YearlyCount
+                </span>
+            </div>
+        </li>
+
+        if (Request.IsAuthenticated && User.IsInRole("Admin"))
+        {
+            <form class='segmentChangeForm' action='~/Word/AddImageToWord' enctype='multipart/form-data' method='post'>
+                <input hidden value="@word.WordId" name="wordId" />
+                <label>Image File</label>
+                <input type='file' name='imageFile'>
+                <button>Add Img</button>
+            </form>
         }
+    }
 
-    </ul>
-
-<script>
-
-
-</script>
-
+</ul>
 
 <style>
-    /*.dailyCount:hover {
-       color: white;
-    }*/
+    .topWord {
+        display: inline-flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .wordImg {
+        height: 50px;
+        width: 50px;
+        border-radius: 100px;
+        float: right;
+    }
 
     .AllCount {
         display: none;
