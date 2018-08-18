@@ -32,21 +32,15 @@
 <body>
 
     <div class="factFluxHeader">
-
         <div class="headerHolder">
-
             <a href="~/" class="headerTitle">FactFlux <span class="headerTxt">Watch News Evolve</span></a>
-
             <div class="buttonGroup">
-                <div class="headerButton">
-                    <a href="#">About</a>
-                </div>
-
-                <div class="headerButton">
-                    <a href="https://twitter.com/factflux">
-                        <i class="fa fa-twitter headerTwitter" aria-hidden="true"></i>
-                    </a>
-                </div>
+                <a href="~/about" class="headerButton">
+                    About
+                </a>
+                <a class="headerButton" href="https://twitter.com/factflux">
+                    <i class="fa fa-twitter headerTwitter" aria-hidden="true"></i>
+                </a>
             </div>
         </div>
     </div>
@@ -111,7 +105,7 @@
     }
 
     .buttonGroup {
-        display:inline-flex;
+        display: inline-flex;
     }
 
     .headerHolder {
@@ -131,17 +125,19 @@
     .headerButton {
         border-radius: 15px;
         text-align: center;
-        margin-left:10px;
-        margin-top:15px;
+        margin-left: 10px;
+        margin-top: 15px;
         border: 3px solid white;
-
-        padding-top:5px;
+        padding-top: 3px;
         width: 70px;
-        height:30px;
+        height: 30px;
     }
 
-    .headerButton:hover {
-    }
+        .headerButton:hover {
+            background-color: mediumaquamarine; /* Green */
+            color: white;
+            transition-duration: 0.4s;
+        }
 
     .headerSpace {
         margin-left: 50px;
