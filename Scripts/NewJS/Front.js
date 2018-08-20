@@ -1,11 +1,11 @@
 ﻿
 
 
+//////////////Start///////////Sorting by Letters
 
 $(".searchInput").keyup(throttle(function () {
 
     var containsLetters = $(".searchInput").val().toLowerCase();
-
 
     if (containsLetters == "") {
         $(".survey-item").hide();
@@ -24,7 +24,6 @@ $(".searchInput").keyup(throttle(function () {
     }
 
     clearOutWordsAndMakeCall(settings)
-
 }));
 
 function throttle(f, delay) {
@@ -46,8 +45,6 @@ $(".timeFrames").change(function () {
 
 function callAjax(val) {
 
-    console.log("value= " + val)
-
     var settings = {
         "async": true,
         "crossDomain": true,
@@ -68,7 +65,6 @@ function clearOutWordsAndMakeCall(settings) {
         var makeArray = JSON.parse(response);
         $(".survey-item").hide();
         makeArray.forEach(function (item) {
-            console.log(item.Word)
             appendItems(item)
         });
     });
@@ -77,8 +73,8 @@ function clearOutWordsAndMakeCall(settings) {
 function appendItems(item) {
     $(".wordTableBody").fadeIn();
     $(".wordTableBody").append(
-        "<li class='survey-item' data-slug='" + item.Slug + "'" + "data-day='" + item.DailyCount + "' data-week='" + item.WeeklyCount + "'" +
-        "data-month='" + item.MonthlyCount + "' data-year='" + item.YearlyCount + "'>" +
+        "<li class='survey-item' data-slug='" + item.Slug + "'" + "data-day='" + item.DailyCount + "' data-week='" + item.WeeklyCount + "'" + "data-month='" + item.MonthlyCount + "' data-year='" + item.YearlyCount + "'>" +
+        "<a href='"+item.Slug+"'>"+
         "<span class='survey-name'>" + item.Word + "</span>" +
         "<div class='pull-right'>" +
         "<span class='dailyCount'>" +
@@ -88,6 +84,7 @@ function appendItems(item) {
         "Daily:" +
         "</span>" +
         "</div>" +
+        "</a>"+
         "</li>")
 };
 //////////////End///////////Sorting by time frame

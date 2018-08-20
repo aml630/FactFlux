@@ -13,21 +13,25 @@ html * {
   -moz-box-sizing: border-box;
   box-sizing: border-box; }
 
-body {
+body{
+    background-color: #e9f0f5;
+}
+
+.timelineBody {
   font-size: 100%;
   font-family: "Droid Serif", serif;
   color: #7f8c97;
   background-color: #e9f0f5; }
 
-a {
+.timelineBody a {
   color: #acb7c0;
   text-decoration: none;
   font-family: "Open Sans", sans-serif; }
 
-img {
+.timelineBody img {
   max-width: 100%; }
 
-h1, h2 {
+.timelineBody h1, h2 {
   font-family: "Open Sans", sans-serif;
   font-weight: bold; }
 
@@ -159,7 +163,7 @@ header {
     border-radius: 0.25em;
     padding: 1em;
     box-shadow: 0 3px 0 #d7e4ed;
-    background-color: #e9f0f5;
+    /*background-color: #e9f0f5;*/
 }
   .cd-timeline-content:after {
     content: "";

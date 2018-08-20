@@ -29,33 +29,36 @@
 
     @foreach (var word in Model)
     {
-        <li class="survey-item original" data-slug="@word.Slug" data-day="@word.DailyCount" data-week="@word.WeeklyCount" data-month="@word.MonthlyCount" data-year="@word.YearlyCount">
 
-            @if (!string.IsNullOrEmpty(word.Image))
-            {
-                <div class="topWord">
+        <li class="survey-item original" data-slug="@word.Slug" data-day="@word.DailyCount" data-week="@word.WeeklyCount" data-month="@word.MonthlyCount" data-year="@word.YearlyCount">
+            <a href="~/@word.Slug">
+                @if (!string.IsNullOrEmpty(word.Image))
+                {
+                    <div class="topWord">
+                        <span class="survey-name">
+                            @word.Word1
+                        </span>
+                        <img class="wordImg" src="~/@word.Image" />
+                    </div>
+                }
+                else
+                {
                     <span class="survey-name">
                         @word.Word1
                     </span>
-                    <img class="wordImg" src="~/@word.Image" />
-                </div>
-            }
-            else
-            {
-                <span class="survey-name">
-                    @word.Word1
-                </span>
-            }
+                }
 
-            <div class="pull-right">
-                <span class="dailyCount">
-                <i class="fa fa-calendar" aria-hidden="true"></i>
-                    Daily Count: @word.DailyCount
-                </span>
-                <span class="AllCount">
-                    Daily: @word.DailyCount Monthly:@word.MonthlyCount Yearly:@word.YearlyCount
-                </span>
-            </div>
+                <div class="pull-right">
+                    <span class="dailyCount">
+                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                        Daily Count: @word.DailyCount
+                    </span>
+                    <span class="AllCount">
+                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                        Daily: @word.DailyCount Monthly:@word.MonthlyCount Yearly:@word.YearlyCount
+                    </span>
+                </div>
+            </a>
         </li>
 
         if (Request.IsAuthenticated && User.IsInRole("Admin"))
@@ -71,7 +74,21 @@
 
 </ul>
 
+<script>
+    $(".survey-item").hover(function () {
+        $(this).children(".pull-right").children(".dailyCount").slideToggle()
+        $(this).children(".pull-right").children(".AllCount").slideToggle()
+    });
+</script>
+
 <style>
+    .survey-item {
+        /*background-color: blue;*/
+        /*border: 3px solid black;*/
+    }
+
+
+
     .topWord {
         display: inline-flex;
         justify-content: space-between;
@@ -87,7 +104,6 @@
 
     .AllCount {
         display: none;
-        font-size: 10px;
     }
 
     .timeFrames {

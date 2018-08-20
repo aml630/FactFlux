@@ -204,6 +204,18 @@
     font-size: 13px;
 }
 
+.grid .AllCount {
+    /*display: block;*/
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    padding: 20px;
+    border-top: 1px solid #eee;
+    font-size: 13px;
+}
+
 .grid .dailyCount-bg {
     width: 40%;
     display: block;
