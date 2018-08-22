@@ -22,16 +22,17 @@ namespace FactFlux.Logic
 
                 using (var db = new FactFluxEntities())
                 {
-                    var findUser = db.AspNetUsers.Where(x => x.UserName == user.Name);
+                    var findUser = db.AspNetUsers.Where(x => x.UserName == user.Name).FirstOrDefault();
 
-                    //var isUserAdmin = db.asp
+                    var userIsAdmin = findUser.AspNetRoles.Where(x => x.Id == "1").Any();
+
+                    if (userIsAdmin)
+                    {
+                        return;
+                    }
                 }
             }
 
-            throw new Exception("tgtf");
-            return;
-
-        
             filterContext.Result = new HttpUnauthorizedResult();
         }
     }
