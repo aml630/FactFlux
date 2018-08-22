@@ -14,6 +14,7 @@ using System.Web.Script.Serialization;
 using Newtonsoft.Json;
 using System.Web.Helpers;
 using System.IO;
+using FactFlux.Logic;
 
 namespace FactFlux.Controllers
 {
@@ -638,8 +639,10 @@ namespace FactFlux.Controllers
             return "Success";
         }
 
+        [BasicAuthentication]
         public string GetWordsThatContainInput(string containsLetters)
         {
+
             using (FactFluxEntities db = new FactFluxEntities())
             {
                 var listOfWords = db.Words.Where(x => x.Word1.Contains(containsLetters) 
