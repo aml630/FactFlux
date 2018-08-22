@@ -13,10 +13,12 @@ $(".searchInput").keyup(throttle(function () {
         return;
     }
 
+    var url = window.location.href + "/Word/GetWordsThatContainInput?containsLetters=" + containsLetters;
+
     var settings = {
         "async": true,
         "crossDomain": true,
-        "url": window.location.pathname + "/Word/GetWordsThatContainInput?containsLetters=" + containsLetters,
+        "url": url,
         "method": "GET",
         "headers": {
             "cache-control": "no-cache"
@@ -45,10 +47,12 @@ $(".timeFrames").change(function () {
 
 function callAjax(val) {
 
+    var url = window.location.href  + "/Word/GetTimeFrameWords/?timeFrame=" + val;
+
     var settings = {
         "async": true,
         "crossDomain": true,
-        "url": window.location.pathname + "/Word/GetTimeFrameWords/?timeFrame=" + val,
+        "url": url,
         "method": "GET",
         "headers": {
             "cache-control": "no-cache"

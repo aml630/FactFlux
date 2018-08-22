@@ -639,7 +639,6 @@ namespace FactFlux.Controllers
             return "Success";
         }
 
-        [BasicAuthentication]
         public string GetWordsThatContainInput(string containsLetters)
         {
 
