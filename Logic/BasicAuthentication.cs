@@ -33,7 +33,7 @@ namespace FactFlux.Logic
                 }
             }
 
-            filterContext.Result = new HttpUnauthorizedResult();
+            throw new Exception("Not Authorized");
         }
     }
 }
