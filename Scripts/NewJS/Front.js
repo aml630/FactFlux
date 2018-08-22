@@ -55,22 +55,51 @@ function callAjax(val) {
         }
     }
 
-    clearOutWordsAndMakeCall(settings)
+    clearOutWordsAndMakeCall(settings, val)
 }
 
-function clearOutWordsAndMakeCall(settings) {
+function clearOutWordsAndMakeCall(settings, val) {
     $(".wordTableBody").fadeOut();
+
+    var filterWord = "";
+    if (val == "1") {
+        filterWord = "Daily";
+    }
+    if (val == "2") {
+        filterWord = "Weekly";
+    }
+    if (val == "3") {
+        filterWord = "Monthly";
+    }
+    if (val == "4") {
+        filterWord = "Yearly";
+    }
 
     $.ajax(settings).done(function (response) {
         var makeArray = JSON.parse(response);
         $(".survey-item").hide();
         makeArray.forEach(function (item) {
-            appendItems(item)
+            appendItems(item, filterWord)
         });
     });
 }
 
-function appendItems(item) {
+function appendItems(item, filterWord) {
+
+    var amount = "";
+    if (filterWord == "Daily") {
+        amount = item.DailyCount;
+    }
+    if (filterWord == "Weekly") {
+        amount = item.WeeklyCount;
+    }
+    if (filterWord == "Monthly") {
+        amount = item.MonthlyCount;
+    }
+    if (filterWord == "Yearly") {
+        amount = item.YearlyCount;
+    }
+
     $(".wordTableBody").fadeIn();
     $(".wordTableBody").append(
         "<li class='survey-item' data-slug='" + item.Slug + "'" + "data-day='" + item.DailyCount + "' data-week='" + item.WeeklyCount + "'" + "data-month='" + item.MonthlyCount + "' data-year='" + item.YearlyCount + "'>" +
@@ -78,7 +107,8 @@ function appendItems(item) {
         "<span class='survey-name'>" + item.Word + "</span>" +
         "<div class='pull-right'>" +
         "<span class='dailyCount'>" +
-        "Daily Count: " + item.DailyCount +
+        "<i class='fa fa-calendar' aria-hidden='true'></i>"+
+        " " +filterWord + " Count: " + amount +
         "</span>" +
         "<span class='AllCount'>" +
         "Daily:" +
