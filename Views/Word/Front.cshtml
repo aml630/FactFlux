@@ -47,29 +47,34 @@
                         @word.Word1
                     </span>
                 }
+                @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                {
+                    <form class='segmentChangeForm' action='~/Word/AddImageToWord' enctype='multipart/form-data' method='post'>
+                        <input hidden value="@word.WordId" name="wordId" />
+                        <label>Image File</label>
+                        <input type='file' name='imageFile'>
+                        <button>Add Img</button>
+                    </form>
 
-                <div class="pull-right">
-                    <span class="dailyCount">
-                        <i class="fa fa-calendar" aria-hidden="true"></i>
-                        Daily Count: @word.DailyCount
-                    </span>
-                    <span class="AllCount">
-                        <i class="fa fa-calendar" aria-hidden="true"></i>
-                        Daily: @word.DailyCount Monthly:@word.MonthlyCount Yearly:@word.YearlyCount
-                    </span>
-                </div>
+                }
+                else
+                {
+
+                    <div class="pull-right">
+                        <span class="dailyCount">
+                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                            Daily Count: @word.DailyCount
+                        </span>
+                        <span class="AllCount">
+                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                            Daily: @word.DailyCount Monthly:@word.MonthlyCount Yearly:@word.YearlyCount
+                        </span>
+                    </div>
+                }
             </a>
+
         </li>
 
-        if (Request.IsAuthenticated && User.IsInRole("Admin"))
-        {
-            <form class='segmentChangeForm' action='~/Word/AddImageToWord' enctype='multipart/form-data' method='post'>
-                <input hidden value="@word.WordId" name="wordId" />
-                <label>Image File</label>
-                <input type='file' name='imageFile'>
-                <button>Add Img</button>
-            </form>
-        }
     }
 
 </ul>
@@ -82,6 +87,10 @@
 </script>
 
 <style>
+    .segmentChangeForm {
+        margin-bottom: 20px;
+    }
+
     .survey-item {
         /*background-color: blue;*/
         /*border: 3px solid black;*/

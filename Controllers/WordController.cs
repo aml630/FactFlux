@@ -245,15 +245,15 @@ namespace FactFlux.Controllers
             {
                 var feeds = db.RSSFeeds.Where(x => x.FeedId > 4).ToList();
 
-                if (singleSearch)
+                if (feedToSearch != -1)
                 {
-                    var feed = feeds.OrderBy(x => x.LastUpdated).FirstOrDefault();
+                    var feed = feeds.Where(x => x.FeedId == feedToSearch).FirstOrDefault();
 
                     updateResults = UpdateFeed(updateResults, db, feed);
                 }
-                else if (feedToSearch != -1)
+                else if (singleSearch)
                 {
-                    var feed = feeds.Where(x => x.FeedId == feedToSearch).FirstOrDefault();
+                    var feed = feeds.OrderBy(x => x.LastUpdated).FirstOrDefault();
 
                     updateResults = UpdateFeed(updateResults, db, feed);
                 }

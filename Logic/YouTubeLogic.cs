@@ -15,7 +15,7 @@ namespace FactFlux.Logic
         {
             var youtubeService = new YouTubeService(new BaseClientService.Initializer()
             {
-                ApiKey = ConfigurationManager.AppSettings["AdminName"],
+                ApiKey = ConfigurationManager.AppSettings["YouTubeApiKey"],
                 ApplicationName = this.GetType().ToString()
             });
 

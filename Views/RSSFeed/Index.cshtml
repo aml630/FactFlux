@@ -31,7 +31,7 @@
         <p>@feed.LastUpdated</p>
         <h3>@feed.FeedType</h3>
 
-        @foreach (var article in feed.ArticleLinks.OrderByDescending(fd => fd.DatePublished).Take(20))
+        @foreach (var article in feed.ArticleLinks.OrderByDescending(fd => fd.DatePublished).Take(1))
         {
         <p>@article.DatePublished + ": "+@article.ArticleLinkTitle</p>
         }
