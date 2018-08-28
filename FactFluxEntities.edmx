@@ -1,0 +1,1155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="FactFluxModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ArticleLinks">
+          <Key>
+            <PropertyRef Name="ArticleLinkId" />
+          </Key>
+          <Property Name="ArticleLinkId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ArticleLinkTitle" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="ArticleLinkUrl" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="DatePublished" Type="datetime" Nullable="false" />
+          <Property Name="DateAdded" Type="datetime" Nullable="false" />
+          <Property Name="FeedId" Type="int" />
+        </EntityType>
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ClaimType" Type="nvarchar(max)" />
+          <Property Name="ClaimValue" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogins">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Facts">
+          <Key>
+            <PropertyRef Name="FactId" />
+          </Key>
+          <Property Name="FactId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FactTitle" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="FactText" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="DateTookPlace" Type="datetime" Nullable="false" />
+          <Property Name="DateAdded" Type="datetime" Nullable="false" />
+          <Property Name="SourceArticleUrl" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="SourceArticleTitle" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="ApprovalStatus" Type="int" Nullable="false" />
+          <Property Name="TimelineId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ParentWords">
+          <Key>
+            <PropertyRef Name="WordJoinId" />
+          </Key>
+          <Property Name="WordJoinId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ParentWordId" Type="int" Nullable="false" />
+          <Property Name="ChildWordId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Resources">
+          <Key>
+            <PropertyRef Name="ResourceId" />
+          </Key>
+          <Property Name="ResourceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ResourceTitle" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="ResourceUrl" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="DatePublished" Type="datetime" Nullable="false" />
+          <Property Name="DateAdded" Type="datetime" Nullable="false" />
+          <Property Name="ResourceType" Type="int" Nullable="false" />
+          <Property Name="TimelineId" Type="int" Nullable="false" />
+          <Property Name="ApprovalStatus" Type="int" Nullable="false" />
+          <Property Name="FeedId" Type="int" />
+          <Property Name="FactText" Type="nvarchar(max)" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RSSFeeds">
+          <Key>
+            <PropertyRef Name="FeedId" />
+          </Key>
+          <Property Name="FeedId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FeedTitle" Type="nvarchar" MaxLength="250" />
+          <Property Name="FeedLink" Type="varchar" MaxLength="250" />
+          <Property Name="SourceImage" Type="nvarchar" MaxLength="250" />
+          <Property Name="LastUpdated" Type="datetime" />
+          <Property Name="FeedType" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SearchWords">
+          <Key>
+            <PropertyRef Name="SearchWordId" />
+          </Key>
+          <Property Name="SearchWordId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SearchWordString" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="TimelineId" Type="int" Nullable="false" />
+          <Property Name="SearchWordString2" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Timelines">
+          <Key>
+            <PropertyRef Name="TimelineId" />
+          </Key>
+          <Property Name="TimelineId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TimelineTitle" Type="nvarchar" MaxLength="250" />
+          <Property Name="TimelineImage" Type="varchar" MaxLength="150" />
+          <Property Name="TimelineSlug" Type="nvarchar" MaxLength="150" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="TwShare" Type="int" Nullable="false" />
+          <Property Name="FbShare" Type="int" Nullable="false" />
+          <Property Name="LastUpdated" Type="datetime" />
+        </EntityType>
+        <EntityType Name="WordLogs">
+          <Key>
+            <PropertyRef Name="WordLogId" />
+          </Key>
+          <Property Name="WordLogId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WordId" Type="int" Nullable="false" />
+          <Property Name="DateAdded" Type="datetime" Nullable="false" />
+          <Property Name="ArticleLinkId" Type="int" />
+        </EntityType>
+        <EntityType Name="Words">
+          <Key>
+            <PropertyRef Name="WordId" />
+          </Key>
+          <Property Name="WordId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Word" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="Banned" Type="bit" Nullable="false" />
+          <Property Name="DailyCount" Type="int" />
+          <Property Name="WeeklyCount" Type="int" />
+          <Property Name="MonthlyCount" Type="int" />
+          <Property Name="YearlyCount" Type="int" />
+          <Property Name="Slug" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Image" Type="nvarchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="YouTubeVideos">
+          <Key>
+            <PropertyRef Name="YouTubeVideoId" />
+          </Key>
+          <Property Name="YouTubeVideoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="YouTubeVideoTitle" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="YouTubeVideoUrl" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="DatePublished" Type="datetime" Nullable="false" />
+          <Property Name="DateAdded" Type="datetime" Nullable="false" />
+          <Property Name="FeedId" Type="int" />
+        </EntityType>
+        <Association Name="FK__ArticleLi__FeedI__6B24EA82">
+          <End Role="RSSFeeds" Type="Self.RSSFeeds" Multiplicity="0..1" />
+          <End Role="ArticleLinks" Type="Self.ArticleLinks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RSSFeeds">
+              <PropertyRef Name="FeedId" />
+            </Principal>
+            <Dependent Role="ArticleLinks">
+              <PropertyRef Name="FeedId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Facts__TimelineI__6FE99F9F">
+          <End Role="Timelines" Type="Self.Timelines" Multiplicity="1" />
+          <End Role="Facts" Type="Self.Facts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Timelines">
+              <PropertyRef Name="TimelineId" />
+            </Principal>
+            <Dependent Role="Facts">
+              <PropertyRef Name="TimelineId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ParentWor__Child__71D1E811">
+          <End Role="Words" Type="Self.Words" Multiplicity="1" />
+          <End Role="ParentWords" Type="Self.ParentWords" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Words">
+              <PropertyRef Name="WordId" />
+            </Principal>
+            <Dependent Role="ParentWords">
+              <PropertyRef Name="ChildWordId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ParentWor__Paren__70DDC3D8">
+          <End Role="Words" Type="Self.Words" Multiplicity="1" />
+          <End Role="ParentWords" Type="Self.ParentWords" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Words">
+              <PropertyRef Name="WordId" />
+            </Principal>
+            <Dependent Role="ParentWords">
+              <PropertyRef Name="ParentWordId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Resources__FeedI__73BA3083">
+          <End Role="RSSFeeds" Type="Self.RSSFeeds" Multiplicity="0..1" />
+          <End Role="Resources" Type="Self.Resources" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RSSFeeds">
+              <PropertyRef Name="FeedId" />
+            </Principal>
+            <Dependent Role="Resources">
+              <PropertyRef Name="FeedId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Resources__Timel__72C60C4A">
+          <End Role="Timelines" Type="Self.Timelines" Multiplicity="1" />
+          <End Role="Resources" Type="Self.Resources" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Timelines">
+              <PropertyRef Name="TimelineId" />
+            </Principal>
+            <Dependent Role="Resources">
+              <PropertyRef Name="TimelineId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Resources__Timel__74AE54BC">
+          <End Role="Timelines" Type="Self.Timelines" Multiplicity="1" />
+          <End Role="Resources" Type="Self.Resources" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Timelines">
+              <PropertyRef Name="TimelineId" />
+            </Principal>
+            <Dependent Role="Resources">
+              <PropertyRef Name="TimelineId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SearchWor__Timel__75A278F5">
+          <End Role="Timelines" Type="Self.Timelines" Multiplicity="1" />
+          <End Role="SearchWords" Type="Self.SearchWords" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Timelines">
+              <PropertyRef Name="TimelineId" />
+            </Principal>
+            <Dependent Role="SearchWords">
+              <PropertyRef Name="TimelineId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__WordLogs__Articl__778AC167">
+          <End Role="ArticleLinks" Type="Self.ArticleLinks" Multiplicity="0..1" />
+          <End Role="WordLogs" Type="Self.WordLogs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ArticleLinks">
+              <PropertyRef Name="ArticleLinkId" />
+            </Principal>
+            <Dependent Role="WordLogs">
+              <PropertyRef Name="ArticleLinkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__WordLogs__WordId__76969D2E">
+          <End Role="Words" Type="Self.Words" Multiplicity="1" />
+          <End Role="WordLogs" Type="Self.WordLogs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Words">
+              <PropertyRef Name="WordId" />
+            </Principal>
+            <Dependent Role="WordLogs">
+              <PropertyRef Name="WordId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__YouTubeVi__FeedI__0B91BA14">
+          <End Role="RSSFeeds" Type="Self.RSSFeeds" Multiplicity="0..1" />
+          <End Role="YouTubeVideos" Type="Self.YouTubeVideos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RSSFeeds">
+              <PropertyRef Name="FeedId" />
+            </Principal>
+            <Dependent Role="YouTubeVideos">
+              <PropertyRef Name="FeedId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="GetWordsWithCount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DateStart" Type="date" Mode="In" />
+        </Function>
+        <Function Name="ReRunWordCounts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="FactFluxModelStoreContainer">
+          <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ArticleLinks" EntityType="Self.ArticleLinks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Facts" EntityType="Self.Facts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ParentWords" EntityType="Self.ParentWords" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Resources" EntityType="Self.Resources" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RSSFeeds" EntityType="Self.RSSFeeds" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SearchWords" EntityType="Self.SearchWords" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Timelines" EntityType="Self.Timelines" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WordLogs" EntityType="Self.WordLogs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Words" EntityType="Self.Words" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="YouTubeVideos" EntityType="Self.YouTubeVideos" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__ArticleLi__FeedI__6B24EA82" Association="Self.FK__ArticleLi__FeedI__6B24EA82">
+            <End Role="RSSFeeds" EntitySet="RSSFeeds" />
+            <End Role="ArticleLinks" EntitySet="ArticleLinks" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Facts__TimelineI__6FE99F9F" Association="Self.FK__Facts__TimelineI__6FE99F9F">
+            <End Role="Timelines" EntitySet="Timelines" />
+            <End Role="Facts" EntitySet="Facts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ParentWor__Child__71D1E811" Association="Self.FK__ParentWor__Child__71D1E811">
+            <End Role="Words" EntitySet="Words" />
+            <End Role="ParentWords" EntitySet="ParentWords" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ParentWor__Paren__70DDC3D8" Association="Self.FK__ParentWor__Paren__70DDC3D8">
+            <End Role="Words" EntitySet="Words" />
+            <End Role="ParentWords" EntitySet="ParentWords" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Resources__FeedI__73BA3083" Association="Self.FK__Resources__FeedI__73BA3083">
+            <End Role="RSSFeeds" EntitySet="RSSFeeds" />
+            <End Role="Resources" EntitySet="Resources" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Resources__Timel__72C60C4A" Association="Self.FK__Resources__Timel__72C60C4A">
+            <End Role="Timelines" EntitySet="Timelines" />
+            <End Role="Resources" EntitySet="Resources" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Resources__Timel__74AE54BC" Association="Self.FK__Resources__Timel__74AE54BC">
+            <End Role="Timelines" EntitySet="Timelines" />
+            <End Role="Resources" EntitySet="Resources" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SearchWor__Timel__75A278F5" Association="Self.FK__SearchWor__Timel__75A278F5">
+            <End Role="Timelines" EntitySet="Timelines" />
+            <End Role="SearchWords" EntitySet="SearchWords" />
+          </AssociationSet>
+          <AssociationSet Name="FK__WordLogs__Articl__778AC167" Association="Self.FK__WordLogs__Articl__778AC167">
+            <End Role="ArticleLinks" EntitySet="ArticleLinks" />
+            <End Role="WordLogs" EntitySet="WordLogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__WordLogs__WordId__76969D2E" Association="Self.FK__WordLogs__WordId__76969D2E">
+            <End Role="Words" EntitySet="Words" />
+            <End Role="WordLogs" EntitySet="WordLogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__YouTubeVi__FeedI__0B91BA14" Association="Self.FK__YouTubeVi__FeedI__0B91BA14">
+            <End Role="RSSFeeds" EntitySet="RSSFeeds" />
+            <End Role="YouTubeVideos" EntitySet="YouTubeVideos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FactFluxModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="C__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogin">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+          <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+          <NavigationProperty Name="AspNetUserClaims" Relationship="FactFluxModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserClaim" />
+        </EntityType>
+        <EntityType Name="Resource">
+          <Key>
+            <PropertyRef Name="ResourceId" />
+          </Key>
+          <Property Name="ResourceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ResourceTitle" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ResourceUrl" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DatePublished" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateAdded" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ResourceType" Type="Int32" Nullable="false" />
+          <Property Name="TimelineId" Type="Int32" Nullable="false" />
+          <Property Name="ApprovalStatus" Type="Int32" Nullable="false" />
+          <Property Name="FeedId" Type="Int32" />
+          <Property Name="FactText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Timeline" Relationship="Self.FK__Resources__Timel__38996AB5" FromRole="Resources" ToRole="Timelines" />
+          <NavigationProperty Name="Timeline1" Relationship="Self.FK__Resources__Timel__3D5E1FD2" FromRole="Resources" ToRole="Timelines" />
+          <NavigationProperty Name="RSSFeed" Relationship="FactFluxModel.FK__Resources__FeedI__73BA3083" FromRole="Resource" ToRole="RSSFeed" />
+        </EntityType>
+        <EntityType Name="SearchWord">
+          <Key>
+            <PropertyRef Name="SearchWordId" />
+          </Key>
+          <Property Name="SearchWordId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SearchWordString" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TimelineId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Timeline" Relationship="Self.FK__SearchWor__Timel__403A8C7D" FromRole="SearchWords" ToRole="Timelines" />
+          <Property Name="SearchWordString2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Timeline">
+          <Key>
+            <PropertyRef Name="TimelineId" />
+          </Key>
+          <Property Name="TimelineId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TimelineTitle" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="TimelineImage" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="TimelineSlug" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Resources" Relationship="Self.FK__Resources__Timel__38996AB5" FromRole="Timelines" ToRole="Resources" />
+          <NavigationProperty Name="Resources1" Relationship="Self.FK__Resources__Timel__3D5E1FD2" FromRole="Timelines" ToRole="Resources" />
+          <NavigationProperty Name="SearchWords" Relationship="Self.FK__SearchWor__Timel__403A8C7D" FromRole="Timelines" ToRole="SearchWords" />
+          <Property Name="TwShare" Type="Int32" Nullable="false" />
+          <Property Name="FbShare" Type="Int32" Nullable="false" />
+          <Property Name="LastUpdated" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Facts" Relationship="FactFluxModel.FK__Facts__TimelineI__403A8C7D" FromRole="Timeline" ToRole="Fact" />
+        </EntityType>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Resources__Timel__38996AB5">
+          <End Role="Timelines" Type="Self.Timeline" Multiplicity="1" />
+          <End Role="Resources" Type="Self.Resource" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Timelines">
+              <PropertyRef Name="TimelineId" />
+            </Principal>
+            <Dependent Role="Resources">
+              <PropertyRef Name="TimelineId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Resources__Timel__3D5E1FD2">
+          <End Role="Timelines" Type="Self.Timeline" Multiplicity="1" />
+          <End Role="Resources" Type="Self.Resource" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Timelines">
+              <PropertyRef Name="TimelineId" />
+            </Principal>
+            <Dependent Role="Resources">
+              <PropertyRef Name="TimelineId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SearchWor__Timel__403A8C7D">
+          <End Role="Timelines" Type="Self.Timeline" Multiplicity="1" />
+          <End Role="SearchWords" Type="Self.SearchWord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Timelines">
+              <PropertyRef Name="TimelineId" />
+            </Principal>
+            <Dependent Role="SearchWords">
+              <PropertyRef Name="TimelineId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AspNetUserRoles">
+          <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="FactFluxEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
+          <EntitySet Name="Resources" EntityType="Self.Resource" />
+          <EntitySet Name="SearchWords" EntityType="Self.SearchWord" />
+          <EntitySet Name="Timelines" EntityType="Self.Timeline" />
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Resources__Timel__38996AB5" Association="Self.FK__Resources__Timel__38996AB5">
+            <End Role="Timelines" EntitySet="Timelines" />
+            <End Role="Resources" EntitySet="Resources" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Resources__Timel__3D5E1FD2" Association="Self.FK__Resources__Timel__3D5E1FD2">
+            <End Role="Timelines" EntitySet="Timelines" />
+            <End Role="Resources" EntitySet="Resources" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SearchWor__Timel__403A8C7D" Association="Self.FK__SearchWor__Timel__403A8C7D">
+            <End Role="Timelines" EntitySet="Timelines" />
+            <End Role="SearchWords" EntitySet="SearchWords" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <EntitySet Name="Facts" EntityType="FactFluxModel.Fact" />
+          <AssociationSet Name="FK__Facts__TimelineI__403A8C7D" Association="FactFluxModel.FK__Facts__TimelineI__403A8C7D">
+            <End Role="Timeline" EntitySet="Timelines" />
+            <End Role="Fact" EntitySet="Facts" />
+          </AssociationSet>
+          <EntitySet Name="Words" EntityType="FactFluxModel.Word" />
+          <EntitySet Name="ArticleLinks" EntityType="FactFluxModel.ArticleLink" />
+          <EntitySet Name="ParentWords" EntityType="FactFluxModel.ParentWord" />
+          <AssociationSet Name="FK__ParentWor__Child__60A75C0F" Association="FactFluxModel.FK__ParentWor__Child__60A75C0F">
+            <End Role="Word" EntitySet="Words" />
+            <End Role="ParentWord" EntitySet="ParentWords" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ParentWor__Paren__5FB337D6" Association="FactFluxModel.FK__ParentWor__Paren__5FB337D6">
+            <End Role="Word" EntitySet="Words" />
+            <End Role="ParentWord" EntitySet="ParentWords" />
+          </AssociationSet>
+          <EntitySet Name="WordLogs" EntityType="FactFluxModel.WordLog" />
+          <AssociationSet Name="FK__WordLogs__WordId__6383C8BA" Association="FactFluxModel.FK__WordLogs__WordId__6383C8BA">
+            <End Role="Word" EntitySet="Words" />
+            <End Role="WordLog" EntitySet="WordLogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__WordLogs__Articl__6477ECF3" Association="FactFluxModel.FK__WordLogs__Articl__6477ECF3">
+            <End Role="ArticleLink" EntitySet="ArticleLinks" />
+            <End Role="WordLog" EntitySet="WordLogs" />
+          </AssociationSet>
+          <FunctionImport Name="GetWordsWithCount" ReturnType="Collection(FactFluxModel.GetWordsWithCount_Result)" >
+          <Parameter Name="DateStart" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="ReRunWordCounts" ReturnType="Collection(FactFluxModel.ReRunWordCounts_Result)">
+          </FunctionImport>
+          <EntitySet Name="YouTubeVideos" EntityType="FactFluxModel.YouTubeVideo" />
+          <EntitySet Name="RSSFeeds" EntityType="FactFluxModel.RSSFeed" />
+          <AssociationSet Name="FK__ArticleLi__FeedI__6B24EA82" Association="FactFluxModel.FK__ArticleLi__FeedI__6B24EA82">
+            <End Role="RSSFeed" EntitySet="RSSFeeds" />
+            <End Role="ArticleLink" EntitySet="ArticleLinks" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Resources__FeedI__73BA3083" Association="FactFluxModel.FK__Resources__FeedI__73BA3083">
+            <End Role="RSSFeed" EntitySet="RSSFeeds" />
+            <End Role="Resource" EntitySet="Resources" />
+          </AssociationSet>
+          <AssociationSet Name="FK__YouTubeVi__FeedI__0B91BA14" Association="FactFluxModel.FK__YouTubeVi__FeedI__0B91BA14">
+            <End Role="RSSFeed" EntitySet="RSSFeeds" />
+            <End Role="YouTubeVideo" EntitySet="YouTubeVideos" />
+          </AssociationSet>
+          <EntitySet Name="AspNetUserClaims" EntityType="FactFluxModel.AspNetUserClaim" />
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="FactFluxModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaim" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="Fact">
+          <Key>
+            <PropertyRef Name="FactId" />
+          </Key>
+          <Property Name="FactId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FactTitle" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="FactText" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DateTookPlace" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateAdded" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="SourceArticleUrl" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="SourceArticleTitle" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="ApprovalStatus" Type="Int32" Nullable="false" />
+          <Property Name="TimelineId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Timeline" Relationship="FactFluxModel.FK__Facts__TimelineI__403A8C7D" FromRole="Fact" ToRole="Timeline" />
+        </EntityType>
+        <Association Name="FK__Facts__TimelineI__403A8C7D">
+          <End Type="FactFluxModel.Timeline" Role="Timeline" Multiplicity="1" />
+          <End Type="FactFluxModel.Fact" Role="Fact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Timeline">
+              <PropertyRef Name="TimelineId" />
+            </Principal>
+            <Dependent Role="Fact">
+              <PropertyRef Name="TimelineId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Word">
+          <Key>
+            <PropertyRef Name="WordId" />
+          </Key>
+          <Property Name="WordId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Word1" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Banned" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ParentWords" Relationship="FactFluxModel.FK__ParentWor__Child__60A75C0F" FromRole="Word" ToRole="ParentWord" />
+          <NavigationProperty Name="ParentWords1" Relationship="FactFluxModel.FK__ParentWor__Paren__5FB337D6" FromRole="Word" ToRole="ParentWord" />
+          <NavigationProperty Name="WordLogs" Relationship="FactFluxModel.FK__WordLogs__WordId__6383C8BA" FromRole="Word" ToRole="WordLog" />
+          <Property Name="DailyCount" Type="Int32" />
+          <Property Name="WeeklyCount" Type="Int32" />
+          <Property Name="MonthlyCount" Type="Int32" />
+          <Property Name="YearlyCount" Type="Int32" />
+          <Property Name="Slug" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Image" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          </EntityType>
+        <EntityType Name="ArticleLink">
+          <Key>
+            <PropertyRef Name="ArticleLinkId" />
+          </Key>
+          <Property Name="ArticleLinkId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ArticleLinkTitle" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ArticleLinkUrl" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="DatePublished" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateAdded" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FeedId" Type="Int32" />
+          <NavigationProperty Name="WordLogs" Relationship="FactFluxModel.FK__WordLogs__Articl__6477ECF3" FromRole="ArticleLink" ToRole="WordLog" />
+          <NavigationProperty Name="RSSFeed" Relationship="FactFluxModel.FK__ArticleLi__FeedI__6B24EA82" FromRole="ArticleLink" ToRole="RSSFeed" />
+        </EntityType>
+        <EntityType Name="ParentWord">
+          <Key>
+            <PropertyRef Name="WordJoinId" />
+          </Key>
+          <Property Name="WordJoinId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ParentWordId" Type="Int32" Nullable="false" />
+          <Property Name="ChildWordId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Word" Relationship="FactFluxModel.FK__ParentWor__Child__60A75C0F" FromRole="ParentWord" ToRole="Word" />
+          <NavigationProperty Name="Word1" Relationship="FactFluxModel.FK__ParentWor__Paren__5FB337D6" FromRole="ParentWord" ToRole="Word" />
+        </EntityType>
+        <Association Name="FK__ParentWor__Child__60A75C0F">
+          <End Type="FactFluxModel.Word" Role="Word" Multiplicity="1" />
+          <End Type="FactFluxModel.ParentWord" Role="ParentWord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Word">
+              <PropertyRef Name="WordId" />
+            </Principal>
+            <Dependent Role="ParentWord">
+              <PropertyRef Name="ChildWordId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ParentWor__Paren__5FB337D6">
+          <End Type="FactFluxModel.Word" Role="Word" Multiplicity="1" />
+          <End Type="FactFluxModel.ParentWord" Role="ParentWord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Word">
+              <PropertyRef Name="WordId" />
+            </Principal>
+            <Dependent Role="ParentWord">
+              <PropertyRef Name="ParentWordId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="WordLog">
+          <Key>
+            <PropertyRef Name="WordLogId" />
+          </Key>
+          <Property Name="WordLogId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WordId" Type="Int32" Nullable="false" />
+          <Property Name="DateAdded" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Word" Relationship="FactFluxModel.FK__WordLogs__WordId__6383C8BA" FromRole="WordLog" ToRole="Word" />
+          <Property Name="ArticleLinkId" Type="Int32" />
+          <NavigationProperty Name="ArticleLink" Relationship="FactFluxModel.FK__WordLogs__Articl__6477ECF3" FromRole="WordLog" ToRole="ArticleLink" />
+        </EntityType>
+        <Association Name="FK__WordLogs__WordId__6383C8BA">
+          <End Type="FactFluxModel.Word" Role="Word" Multiplicity="1" />
+          <End Type="FactFluxModel.WordLog" Role="WordLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Word">
+              <PropertyRef Name="WordId" />
+            </Principal>
+            <Dependent Role="WordLog">
+              <PropertyRef Name="WordId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__WordLogs__Articl__6477ECF3">
+          <End Type="FactFluxModel.ArticleLink" Role="ArticleLink" Multiplicity="0..1" />
+          <End Type="FactFluxModel.WordLog" Role="WordLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ArticleLink">
+              <PropertyRef Name="ArticleLinkId" />
+            </Principal>
+            <Dependent Role="WordLog">
+              <PropertyRef Name="ArticleLinkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="GetWordsWithCount_Result">
+          <Property Type="Int32" Name="WordId" Nullable="false" />
+          <Property Type="String" Name="Word" Nullable="false" MaxLength="500" />
+          <Property Type="Boolean" Name="Banned" Nullable="false" />
+          <Property Type="Int32" Name="Count" Nullable="true" />
+          <Property Type="String" Name="Slug" Nullable="true" MaxLength="4000" />
+        </ComplexType>
+        <ComplexType Name="ReRunWordCounts_Result">
+          <Property Type="Int32" Name="WordId" Nullable="false" />
+          <Property Type="Int32" Name="DailyCount" Nullable="true" />
+          <Property Type="Int32" Name="WeeklyCount" Nullable="true" />
+          <Property Type="Int32" Name="MonthlyCount" Nullable="true" />
+          <Property Type="Int32" Name="YearlyCount" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="YouTubeVideo">
+          <Key>
+            <PropertyRef Name="YouTubeVideoId" />
+          </Key>
+          <Property Name="YouTubeVideoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="YouTubeVideoTitle" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="YouTubeVideoUrl" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="DatePublished" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateAdded" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FeedId" Type="Int32" />
+          <NavigationProperty Name="RSSFeed" Relationship="FactFluxModel.FK__YouTubeVi__FeedI__0B91BA14" FromRole="YouTubeVideo" ToRole="RSSFeed" />
+        </EntityType>
+        <EntityType Name="RSSFeed">
+          <Key>
+            <PropertyRef Name="FeedId" />
+          </Key>
+          <Property Name="FeedId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FeedTitle" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="FeedLink" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="SourceImage" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="LastUpdated" Type="DateTime" Precision="3" />
+          <Property Name="FeedType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ArticleLinks" Relationship="FactFluxModel.FK__ArticleLi__FeedI__6B24EA82" FromRole="RSSFeed" ToRole="ArticleLink" />
+          <NavigationProperty Name="Resources" Relationship="FactFluxModel.FK__Resources__FeedI__73BA3083" FromRole="RSSFeed" ToRole="Resource" />
+          <NavigationProperty Name="YouTubeVideos" Relationship="FactFluxModel.FK__YouTubeVi__FeedI__0B91BA14" FromRole="RSSFeed" ToRole="YouTubeVideo" />
+        </EntityType>
+        <Association Name="FK__ArticleLi__FeedI__6B24EA82">
+          <End Type="FactFluxModel.RSSFeed" Role="RSSFeed" Multiplicity="0..1" />
+          <End Type="FactFluxModel.ArticleLink" Role="ArticleLink" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RSSFeed">
+              <PropertyRef Name="FeedId" />
+            </Principal>
+            <Dependent Role="ArticleLink">
+              <PropertyRef Name="FeedId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Resources__FeedI__73BA3083">
+          <End Type="FactFluxModel.RSSFeed" Role="RSSFeed" Multiplicity="0..1" />
+          <End Type="FactFluxModel.Resource" Role="Resource" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RSSFeed">
+              <PropertyRef Name="FeedId" />
+            </Principal>
+            <Dependent Role="Resource">
+              <PropertyRef Name="FeedId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__YouTubeVi__FeedI__0B91BA14">
+          <End Type="FactFluxModel.RSSFeed" Role="RSSFeed" Multiplicity="0..1" />
+          <End Type="FactFluxModel.YouTubeVideo" Role="YouTubeVideo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RSSFeed">
+              <PropertyRef Name="FeedId" />
+            </Principal>
+            <Dependent Role="YouTubeVideo">
+              <PropertyRef Name="FeedId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="AspNetUserClaim">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="FactFluxModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaim" ToRole="AspNetUser" />
+        </EntityType>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Type="FactFluxModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="FactFluxModel.AspNetUserClaim" Role="AspNetUserClaim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaim">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FactFluxModelStoreContainer" CdmEntityContainer="FactFluxEntities">
+          <EntitySetMapping Name="C__MigrationHistory">
+            <EntityTypeMapping TypeName="FactFluxModel.C__MigrationHistory">
+              <MappingFragment StoreEntitySet="__MigrationHistory">
+                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetRoles">
+            <EntityTypeMapping TypeName="FactFluxModel.AspNetRole">
+              <MappingFragment StoreEntitySet="AspNetRoles">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserLogins">
+            <EntityTypeMapping TypeName="FactFluxModel.AspNetUserLogin">
+              <MappingFragment StoreEntitySet="AspNetUserLogins">
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="FactFluxModel.AspNetUser">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Resources">
+            <EntityTypeMapping TypeName="FactFluxModel.Resource">
+              <MappingFragment StoreEntitySet="Resources">
+                <ScalarProperty Name="ResourceId" ColumnName="ResourceId" />
+                <ScalarProperty Name="ResourceTitle" ColumnName="ResourceTitle" />
+                <ScalarProperty Name="ResourceUrl" ColumnName="ResourceUrl" />
+                <ScalarProperty Name="DatePublished" ColumnName="DatePublished" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="ResourceType" ColumnName="ResourceType" />
+                <ScalarProperty Name="TimelineId" ColumnName="TimelineId" />
+                <ScalarProperty Name="ApprovalStatus" ColumnName="ApprovalStatus" />
+                <ScalarProperty Name="FeedId" ColumnName="FeedId" />
+                <ScalarProperty Name="FactText" ColumnName="FactText" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SearchWords">
+            <EntityTypeMapping TypeName="FactFluxModel.SearchWord">
+              <MappingFragment StoreEntitySet="SearchWords">
+                <ScalarProperty Name="SearchWordString2" ColumnName="SearchWordString2" />
+                <ScalarProperty Name="SearchWordId" ColumnName="SearchWordId" />
+                <ScalarProperty Name="SearchWordString" ColumnName="SearchWordString" />
+                <ScalarProperty Name="TimelineId" ColumnName="TimelineId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Timelines">
+            <EntityTypeMapping TypeName="FactFluxModel.Timeline">
+              <MappingFragment StoreEntitySet="Timelines">
+                <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+                <ScalarProperty Name="FbShare" ColumnName="FbShare" />
+                <ScalarProperty Name="TwShare" ColumnName="TwShare" />
+                <ScalarProperty Name="TimelineId" ColumnName="TimelineId" />
+                <ScalarProperty Name="TimelineTitle" ColumnName="TimelineTitle" />
+                <ScalarProperty Name="TimelineImage" ColumnName="TimelineImage" />
+                <ScalarProperty Name="TimelineSlug" ColumnName="TimelineSlug" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="FactFluxModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+            <EndProperty Name="AspNetRoles">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+            <EndProperty Name="AspNetUsers">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="Facts">
+            <EntityTypeMapping TypeName="FactFluxModel.Fact">
+              <MappingFragment StoreEntitySet="Facts">
+                <ScalarProperty Name="TimelineId" ColumnName="TimelineId" />
+                <ScalarProperty Name="ApprovalStatus" ColumnName="ApprovalStatus" />
+                <ScalarProperty Name="SourceArticleTitle" ColumnName="SourceArticleTitle" />
+                <ScalarProperty Name="SourceArticleUrl" ColumnName="SourceArticleUrl" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="DateTookPlace" ColumnName="DateTookPlace" />
+                <ScalarProperty Name="FactText" ColumnName="FactText" />
+                <ScalarProperty Name="FactTitle" ColumnName="FactTitle" />
+                <ScalarProperty Name="FactId" ColumnName="FactId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Words">
+            <EntityTypeMapping TypeName="FactFluxModel.Word">
+              <MappingFragment StoreEntitySet="Words">
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Slug" ColumnName="Slug" />
+                <ScalarProperty Name="YearlyCount" ColumnName="YearlyCount" />
+                <ScalarProperty Name="MonthlyCount" ColumnName="MonthlyCount" />
+                <ScalarProperty Name="WeeklyCount" ColumnName="WeeklyCount" />
+                <ScalarProperty Name="DailyCount" ColumnName="DailyCount" />
+                <ScalarProperty Name="Banned" ColumnName="Banned" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Word1" ColumnName="Word" />
+                <ScalarProperty Name="WordId" ColumnName="WordId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ArticleLinks">
+            <EntityTypeMapping TypeName="FactFluxModel.ArticleLink">
+              <MappingFragment StoreEntitySet="ArticleLinks">
+                <ScalarProperty Name="FeedId" ColumnName="FeedId" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="DatePublished" ColumnName="DatePublished" />
+                <ScalarProperty Name="ArticleLinkUrl" ColumnName="ArticleLinkUrl" />
+                <ScalarProperty Name="ArticleLinkTitle" ColumnName="ArticleLinkTitle" />
+                <ScalarProperty Name="ArticleLinkId" ColumnName="ArticleLinkId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ParentWords">
+            <EntityTypeMapping TypeName="FactFluxModel.ParentWord">
+              <MappingFragment StoreEntitySet="ParentWords">
+                <ScalarProperty Name="ChildWordId" ColumnName="ChildWordId" />
+                <ScalarProperty Name="ParentWordId" ColumnName="ParentWordId" />
+                <ScalarProperty Name="WordJoinId" ColumnName="WordJoinId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WordLogs">
+            <EntityTypeMapping TypeName="FactFluxModel.WordLog">
+              <MappingFragment StoreEntitySet="WordLogs">
+                <ScalarProperty Name="ArticleLinkId" ColumnName="ArticleLinkId" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="WordId" ColumnName="WordId" />
+                <ScalarProperty Name="WordLogId" ColumnName="WordLogId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetWordsWithCount" FunctionName="FactFluxModel.Store.GetWordsWithCount">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FactFluxModel.GetWordsWithCount_Result">
+                <ScalarProperty Name="WordId" ColumnName="WordId" />
+                <ScalarProperty Name="Word" ColumnName="Word" />
+                <ScalarProperty Name="Banned" ColumnName="Banned" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="Slug" ColumnName="Slug" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ReRunWordCounts" FunctionName="FactFluxModel.Store.ReRunWordCounts">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FactFluxModel.ReRunWordCounts_Result">
+                <ScalarProperty Name="WordId" ColumnName="WordId" />
+                <ScalarProperty Name="DailyCount" ColumnName="DailyCount" />
+                <ScalarProperty Name="WeeklyCount" ColumnName="WeeklyCount" />
+                <ScalarProperty Name="MonthlyCount" ColumnName="MonthlyCount" />
+                <ScalarProperty Name="YearlyCount" ColumnName="YearlyCount" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="YouTubeVideos">
+            <EntityTypeMapping TypeName="FactFluxModel.YouTubeVideo">
+              <MappingFragment StoreEntitySet="YouTubeVideos">
+                <ScalarProperty Name="FeedId" ColumnName="FeedId" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="DatePublished" ColumnName="DatePublished" />
+                <ScalarProperty Name="YouTubeVideoUrl" ColumnName="YouTubeVideoUrl" />
+                <ScalarProperty Name="YouTubeVideoTitle" ColumnName="YouTubeVideoTitle" />
+                <ScalarProperty Name="YouTubeVideoId" ColumnName="YouTubeVideoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RSSFeeds">
+            <EntityTypeMapping TypeName="FactFluxModel.RSSFeed">
+              <MappingFragment StoreEntitySet="RSSFeeds">
+                <ScalarProperty Name="FeedType" ColumnName="FeedType" />
+                <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+                <ScalarProperty Name="SourceImage" ColumnName="SourceImage" />
+                <ScalarProperty Name="FeedLink" ColumnName="FeedLink" />
+                <ScalarProperty Name="FeedTitle" ColumnName="FeedTitle" />
+                <ScalarProperty Name="FeedId" ColumnName="FeedId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserClaims">
+            <EntityTypeMapping TypeName="FactFluxModel.AspNetUserClaim">
+              <MappingFragment StoreEntitySet="AspNetUserClaims">
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
