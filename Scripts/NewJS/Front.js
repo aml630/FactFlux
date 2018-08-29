@@ -41,24 +41,28 @@ $(".getMoreWords").click(function () {
                 amount = item.YearlyCount;
             }
 
-            $(".wordTableBody").append(
-                "<li class='survey-item' data-slug='" + item.Slug + "'" + "data-day='" + item.DailyCount + "' data-week='" + item.WeeklyCount + "'" + "data-month='" + item.MonthlyCount + "' data-year='" + item.YearlyCount + "'>" +
-                "<a href='" + item.Slug + "'>" +
-                "<span class='survey-name'>" + item.Word + "</span>" +
-                "<div class='pull-right'>" +
-                "<span class='dailyCount'>" +
-                "<i class='fa fa-calendar' aria-hidden='true'></i>" +
-                " " + filterWord + " Count: " + amount +
-                "</span>" +
-                "<span class='AllCount'>" +
-                "Daily:" +
-                "</span>" +
-                "</div>" +
-                "</a>" +
-                "</li>")
+            appendWordToTable(item, filterWord, amount)
         });
     });
 })
+
+function appendWordToTable(item, filterWord, amount) {
+    $(".wordTableBody").append(
+        "<li class='survey-item' data-slug='" + item.Slug + "'" + "data-day='" + item.DailyCount + "' data-week='" + item.WeeklyCount + "'" + "data-month='" + item.MonthlyCount + "' data-year='" + item.YearlyCount + "'>" +
+        "<a href='" + item.Slug + "'>" +
+        "<span class='survey-name'>" + item.Word + "</span>" +
+        "<div class='pull-right'>" +
+        "<span class='dailyCount'>" +
+        "<i class='fa fa-calendar' aria-hidden='true'></i>" +
+        " " + filterWord + " Count: " + amount +
+        "</span>" +
+        "<span class='AllCount'>" +
+        "Daily:" +
+        "</span>" +
+        "</div>" +
+        "</a>" +
+        "</li>")
+}
 
 //////////////Start///////////Sorting by Letters
 
@@ -107,7 +111,7 @@ $(".timeFrames").change(function () {
 
 function callAjax(val) {
 
-    var url = window.location.href  + "/Word/GetTimeFrameWords/?timeFrame=" + val;
+    var url = window.location.href + "/Word/GetTimeFrameWords/?timeFrame=" + val;
 
     var settings = {
         "async": true,
@@ -166,20 +170,6 @@ function fadeInAndAppend(item, filterWord) {
 
     $(".wordTableBody").fadeIn();
 
-    $(".wordTableBody").append(
-        "<li class='survey-item' data-slug='" + item.Slug + "'" + "data-day='" + item.DailyCount + "' data-week='" + item.WeeklyCount + "'" + "data-month='" + item.MonthlyCount + "' data-year='" + item.YearlyCount + "'>" +
-        "<a href='"+item.Slug+"'>"+
-        "<span class='survey-name'>" + item.Word + "</span>" +
-        "<div class='pull-right'>" +
-        "<span class='dailyCount'>" +
-        "<i class='fa fa-calendar' aria-hidden='true'></i>"+
-        " " +filterWord + " Count: " + amount +
-        "</span>" +
-        "<span class='AllCount'>" +
-        "Daily:" +
-        "</span>" +
-        "</div>" +
-        "</a>"+
-        "</li>")
+    appendWordToTable(item, filterWord, amount)
 };
 //////////////End///////////Sorting by time frame
