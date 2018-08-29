@@ -656,7 +656,7 @@ namespace FactFlux.Controllers
             }
         }
 
-        public string GetTimeFrameWords(int timeFrame)
+        public string GetTimeFrameWords(int timeFrame, int? pageNumber)
         {
             using (FactFluxEntities db = new FactFluxEntities())
             {
@@ -681,6 +681,12 @@ namespace FactFlux.Controllers
                 if (timeFrame == 4)
                 {
                     listOfWords = listOfWords.Where(x => x.YearlyCount != null).OrderByDescending(x => x.YearlyCount);
+                }
+
+
+                if (pageNumber != null)
+                {
+                    listOfWords = listOfWords.Skip(20*pageNumber.Value);
                 }
 
                 var listToSend = listOfWords.Take(20).Select(x => new ApiWordInfo()

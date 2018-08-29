@@ -1,5 +1,64 @@
 ﻿
+var pageNumber = 0;
 
+$(".getMoreWords").click(function () {
+    var val = $(".timeFrames").val();
+    console.log(val);
+
+    pageNumber += 1;
+    var url = window.location.href + "/Word/GetTimeFrameWords/?timeFrame=" + val + "&pageNumber=" + pageNumber;
+
+    var settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": url,
+        "method": "GET",
+        "headers": {
+            "cache-control": "no-cache"
+        }
+    }
+
+    $.ajax(settings).done(function (response) {
+        var makeArray = JSON.parse(response);
+
+        makeArray.forEach(function (item) {
+            var amount = "";
+            var filterWord = "";
+            if (val == "1") {
+                filterWord = "Daily";
+                amount = item.DailyCount;
+            }
+            if (val == "2") {
+                filterWord = "Weekly";
+                amount = item.WeeklyCount;
+            }
+            if (val == "3") {
+                filterWord = "Monthly";
+                amount = item.MonthlyCount;
+            }
+            if (val == "4") {
+                filterWord = "Yearly";
+                amount = item.YearlyCount;
+            }
+
+            $(".wordTableBody").append(
+                "<li class='survey-item' data-slug='" + item.Slug + "'" + "data-day='" + item.DailyCount + "' data-week='" + item.WeeklyCount + "'" + "data-month='" + item.MonthlyCount + "' data-year='" + item.YearlyCount + "'>" +
+                "<a href='" + item.Slug + "'>" +
+                "<span class='survey-name'>" + item.Word + "</span>" +
+                "<div class='pull-right'>" +
+                "<span class='dailyCount'>" +
+                "<i class='fa fa-calendar' aria-hidden='true'></i>" +
+                " " + filterWord + " Count: " + amount +
+                "</span>" +
+                "<span class='AllCount'>" +
+                "Daily:" +
+                "</span>" +
+                "</div>" +
+                "</a>" +
+                "</li>")
+        });
+    });
+})
 
 //////////////Start///////////Sorting by Letters
 
@@ -10,6 +69,7 @@ $(".searchInput").keyup(throttle(function () {
     if (containsLetters == "") {
         $(".survey-item").hide();
         $(".original").show();
+        $(".timeFrames").val("1");
         return;
     }
 
@@ -25,7 +85,7 @@ $(".searchInput").keyup(throttle(function () {
         }
     }
 
-    clearOutWordsAndMakeCall(settings)
+    clearOutWordsAndMakeCall(settings, "4")
 }));
 
 function throttle(f, delay) {
@@ -83,12 +143,12 @@ function clearOutWordsAndMakeCall(settings, val) {
         var makeArray = JSON.parse(response);
         $(".survey-item").hide();
         makeArray.forEach(function (item) {
-            appendItems(item, filterWord)
+            fadeInAndAppend(item, filterWord)
         });
     });
 }
 
-function appendItems(item, filterWord) {
+function fadeInAndAppend(item, filterWord) {
 
     var amount = "";
     if (filterWord == "Daily") {
@@ -105,6 +165,7 @@ function appendItems(item, filterWord) {
     }
 
     $(".wordTableBody").fadeIn();
+
     $(".wordTableBody").append(
         "<li class='survey-item' data-slug='" + item.Slug + "'" + "data-day='" + item.DailyCount + "' data-week='" + item.WeeklyCount + "'" + "data-month='" + item.MonthlyCount + "' data-year='" + item.YearlyCount + "'>" +
         "<a href='"+item.Slug+"'>"+
