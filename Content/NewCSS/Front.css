@@ -298,3 +298,18 @@
     margin: 0;
     background: #8DC63F;
 }
+
+
+@media (max-width: 450px) {
+    .survey-item{
+        margin-left: -50px !important;
+    }
+    .aboveGrid {
+        margin-top: 50px;
+        margin-left: -50px;
+    }
+
+    .headerTxt {
+        display: none;
+    }
+}

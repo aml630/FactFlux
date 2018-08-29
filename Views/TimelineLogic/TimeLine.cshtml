@@ -27,7 +27,7 @@
         <i class="fa fa-search"></i>
     </div>
 
-    @if (Model.Where(x=>x.RSSFeed.FeedType == "YouTube").Count() > 0)
+    @if (Model.Where(x => x.RSSFeed.FeedType == "YouTube").Count() > 0)
     {
         <div class="sortButtons">
             <div class="toggleVids">Videos</div>
@@ -64,3 +64,16 @@
 
 </div>
 
+<style>
+    @@media (max-width: 450px) {
+
+        .headerTxt {
+            display: none;
+        }
+
+        .main {
+            margin-top: 20px;
+            margin-left: -15px !important;
+        }
+    }
+</style>
