@@ -357,6 +357,19 @@ select {
     display: none !important;
 }
 
+.getMoreWords {
+    width: 70%;
+    height: 50px;
+    border-radius: 15px;
+    background-color: white;
+    box-shadow: 0 2px 1px rgba(170, 170, 170, 0.25);
+    border: none;
+}
+
+.centerText {
+    text-align: center;
+}
+
 @media (max-width: 450px) {
     .survey-item {
         margin-left: -50px !important;
