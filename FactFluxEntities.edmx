@@ -371,6 +371,13 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="GetTimeline" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="slug" Type="nvarchar" Mode="In" />
+          <Parameter Name="pageNum" Type="int" Mode="In" />
+          <Parameter Name="articleType" Type="int" Mode="In" />
+          <Parameter Name="rowNum" Type="int" Mode="In" />
+          <Parameter Name="phraseSearch" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="GetWordsWithCount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="DateStart" Type="date" Mode="In" />
         </Function>
@@ -683,6 +690,13 @@
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaim" EntitySet="AspNetUserClaims" />
           </AssociationSet>
+          <FunctionImport Name="GetTimeline" ReturnType="Collection(FactFluxModel.GetTimeline_Result)">
+            <Parameter Name="slug" Mode="In" Type="String" />
+            <Parameter Name="pageNum" Mode="In" Type="Int32" />
+            <Parameter Name="articleType" Mode="In" Type="Int32" />
+            <Parameter Name="rowNum" Mode="In" Type="Int32" />
+            <Parameter Name="phraseSearch" Mode="In" Type="String" />
+          </FunctionImport>
           </EntityContainer>
         <EntityType Name="Fact">
           <Key>
@@ -911,6 +925,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="GetTimeline_Result">
+          <Property Type="Int32" Name="ArticleLinkId" Nullable="false" />
+          <Property Type="String" Name="ArticleLinkTitle" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="ArticleLinkUrl" Nullable="false" MaxLength="300" />
+          <Property Type="DateTime" Name="DatePublished" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="DateAdded" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="FeedId" Nullable="true" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1129,6 +1151,18 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetTimeline" FunctionName="FactFluxModel.Store.GetTimeline">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FactFluxModel.GetTimeline_Result">
+                <ScalarProperty Name="ArticleLinkId" ColumnName="ArticleLinkId" />
+                <ScalarProperty Name="ArticleLinkTitle" ColumnName="ArticleLinkTitle" />
+                <ScalarProperty Name="ArticleLinkUrl" ColumnName="ArticleLinkUrl" />
+                <ScalarProperty Name="DatePublished" ColumnName="DatePublished" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="FeedId" ColumnName="FeedId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -16,48 +16,53 @@ namespace FactFlux.Controllers
     {
         // GET: Timeline
 
-        public ActionResult LoadTimelineFromWord(string word)
+        public ActionResult LoadTimelineFromWord(string wordSlug, int howMany = 1000000, int articleType = 1, int startingAt = 0, string searchPhrase = "")
         {
+            if (searchPhrase == "") { searchPhrase = null; }
+
             Word searchWord;
 
-            var cachedTimeline = MemoryCache.Default["timelineResources_" + word];
-
-            List<ArticleLink> orderedResources;
-
-
-            FactFluxEntities db = new FactFluxEntities();
-
-            string wordWithSpace = word.Replace('-', ' ').ToLower();
-
-            if (cachedTimeline != null)
+            using (FactFluxEntities db = new FactFluxEntities())
             {
-                searchWord = db.Words.Where(x => x.Word1.ToLower() == wordWithSpace).FirstOrDefault();
-                orderedResources = (List<ArticleLink>)cachedTimeline;
+
+                var cachedTimeline = MemoryCache.Default["timelineResources_" + wordSlug];
+
+                var orderedResources = new List<ArticleLink>();
+
+                searchWord = db.Words.Where(x => x.Slug == wordSlug).FirstOrDefault();
+
+                ViewBag.MainWord = searchWord;
+
+                if (cachedTimeline != null)
+                {
+                    orderedResources = (List<ArticleLink>)cachedTimeline;
+
+                    return View("TimeLine", orderedResources);
+                }
+
+                var orderedResourcesQuery = db.GetTimeline(wordSlug, howMany, articleType, startingAt, searchPhrase)
+                    .Select(x => new ArticleLink
+                    {
+                        ArticleLinkId = x.ArticleLinkId,
+                        ArticleLinkTitle = x.ArticleLinkTitle,
+                        ArticleLinkUrl = x.ArticleLinkUrl,
+                        DatePublished = x.DatePublished,
+                        DateAdded = x.DateAdded,
+                        FeedId = x.FeedId,
+                        //RSSFeed = db.RSSFeeds.Where(z => z.FeedId == x.FeedId);
+                    });
+
+                orderedResources = orderedResourcesQuery.ToList();
+
+                foreach (var article in orderedResources)
+                {
+                    article.RSSFeed = db.RSSFeeds.Where(x => x.FeedId == article.FeedId).FirstOrDefault();
+                }
+
+                MemoryCache.Default["timelineResources_" + wordSlug] = orderedResources;
+
+                return View("TimeLine", orderedResources);
             }
-            else
-            {
-                searchWord = db.Words.Where(x => x.Word1.ToLower() == wordWithSpace).FirstOrDefault();
-
-                var totalRecordsWithChildrenWords = db.ParentWords.Where(x => x.ParentWordId == searchWord.WordId).Select(x => x.ChildWordId).ToList();
-
-                totalRecordsWithChildrenWords.Add(searchWord.WordId);
-
-                var wordLogs = (from t1 in db.WordLogs
-                                join t2 in totalRecordsWithChildrenWords on t1.WordId equals t2
-                                select t1);
-
-                wordLogs = wordLogs.GroupBy(x => x.ArticleLinkId).Select(group => group.FirstOrDefault());
-
-                orderedResources = (from t1 in db.ArticleLinks
-                                    join t2 in wordLogs on t1.ArticleLinkId equals t2.ArticleLinkId
-                                    select t1).OrderByDescending(y => y.DatePublished).ToList();
-
-                MemoryCache.Default["timelineResources_" + word] = orderedResources;
-            }
-
-            ViewBag.MainWord = searchWord;
-
-            return View("TimeLine", orderedResources);
         }
 
         public ActionResult AddTimeline(string title, string image, string slug)

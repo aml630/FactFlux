@@ -76,7 +76,7 @@ namespace FactFlux
 
             routes.MapRoute(
                 name: "LoadTimelineFromWord",
-                url: "{word}",
+                url: "{wordSlug}",
                 defaults: new { controller = "TimelineLogic", action = "LoadTimelineFromWord", word = UrlParameter.Optional }
             );
 
