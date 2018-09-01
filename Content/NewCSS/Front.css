@@ -163,7 +163,7 @@
 @media screen and (max-width: 600px) {
     .grid .survey-item {
         display: block;
-        width: auto;
+        width: 290px;
         height: 150px;
         margin: 10px auto;
         margin-right: 40px;
@@ -377,7 +377,7 @@ select {
 
     .aboveGrid {
         margin-top: 50px;
-        margin-left: -50px;
+        margin-left: -100px;
     }
 
     .headerTxt {

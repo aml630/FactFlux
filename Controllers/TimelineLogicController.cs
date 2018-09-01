@@ -24,7 +24,6 @@ namespace FactFlux.Controllers
 
             using (FactFluxEntities db = new FactFluxEntities())
             {
-
                 var cachedTimeline = MemoryCache.Default["timelineResources_" + wordSlug];
 
                 var orderedResources = new List<ArticleLink>();

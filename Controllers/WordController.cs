@@ -348,15 +348,21 @@ namespace FactFlux.Controllers
 
             int articlesAdded = 0;
 
+            var currentRSSArticeList = new List<string>();
+
             //for each article in the feed
             foreach (var item in albums.Items)
             {
                 var text = item.Title.Text;
 
-                if (OnlyAddUniqueArticle(text))
+                var isArticleRepeatInFeedList = currentRSSArticeList.FirstOrDefault(stringToCheck => stringToCheck.Contains(text));
+
+                if (OnlyAddUniqueArticle(text) && isArticleRepeatInFeedList == null)
                 {
                     try
                     {
+                        currentRSSArticeList.Add(text);
+
                         if (string.IsNullOrEmpty(item.Title.Text) || string.IsNullOrEmpty(item.Links[0].Uri.AbsoluteUri) || item.PublishDate.UtcDateTime == null)
                         {
                             break;
