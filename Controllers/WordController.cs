@@ -426,6 +426,8 @@ namespace FactFlux.Controllers
             var punctuation = newArticleLinke.ArticleLinkTitle.Where(Char.IsPunctuation).Distinct().ToArray();
             var words = newArticleLinke.ArticleLinkTitle.Split().Select(x => x.Trim(punctuation));
 
+            var oneWordLogPerArticle = new List<string>();
+
             foreach (var singleWord in words)
             {
                 //for each word, check if we store a word or phrase that contains it
@@ -443,9 +445,13 @@ namespace FactFlux.Controllers
                     //if we do have it, lets loop through them
                     foreach (var doesExist in doesExistList)
                     {
+                        //words or phrases should only be logged once per article
+                        var alreadyLogged = oneWordLogPerArticle.Any(x => x.Contains(newArticleLinke.ArticleLinkId.ToString() + doesExist.WordId));
                         //if the word isn't banned, and the entire word or phrase is contained in the article, lets log it
-                        if (doesExist.Banned == false && newArticleLinke.ArticleLinkTitle.Contains(doesExist.Word1))
+                        if (doesExist.Banned == false && newArticleLinke.ArticleLinkTitle.Contains(doesExist.Word1) && alreadyLogged == false)
                         {
+                            oneWordLogPerArticle.Add(newArticleLinke.ArticleLinkId.ToString() + doesExist.WordId);
+
                             CreateWordLog(db, datePublished, newArticleLinke.ArticleLinkId, doesExist.WordId, singleWord);
                         }
                     }
