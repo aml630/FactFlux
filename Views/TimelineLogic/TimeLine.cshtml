@@ -1,7 +1,7 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@model List<FactFlux.ArticleLink>
+@model List<GetTimeline_Result>
 
 <title>@ViewBag.MainWord.Word1</title>
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
@@ -27,7 +27,7 @@
         <i class="fa fa-search"></i>
     </div>
 
-    @if (Model.Where(x => x.RSSFeed.FeedType == "YouTube").Count() > 0)
+    @if (Model.Where(x => x.FeedType == "YouTube").Count() > 0)
     {
         <div class="sortButtons">
             <div class="toggleVids">Videos</div>
@@ -38,10 +38,10 @@
     <section id="cd-timeline" class="cd-container">
         @foreach (var item in Model)
         {
-            <div class="cd-timeline-block" data-feedType="@item.RSSFeed.FeedType">
-                <div class="cd-timeline-img cd-picture" style="background-image: url(@item.RSSFeed.SourceImage);">
+            <div class="cd-timeline-block" data-feedType="@item.FeedType">
+                <div class="cd-timeline-img cd-picture" style="background-image: url(@item.SourceImage);">
                 </div> <!-- cd-timeline-img -->
-                @if (item.RSSFeed.FeedType == "RSS")
+                @if (item.FeedType == "RSS")
                 {
                     <div class="cd-timeline-content">
                         <p class="resourceText">@item.ArticleLinkTitle</p>
@@ -49,7 +49,7 @@
                         <a target="_blank" href="@item.ArticleLinkUrl" class="cd-read-more">Read Source</a>
                     </div> <!-- cd-timeline-content -->
                 }
-                @if (item.RSSFeed.FeedType == "YouTube")
+                @if (item.FeedType == "YouTube")
                 {
                     <div class="cd-timeline-content">
                         <h2 class="resourceText">@item.ArticleLinkTitle</h2>

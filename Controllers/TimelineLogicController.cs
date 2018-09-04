@@ -16,7 +16,7 @@ namespace FactFlux.Controllers
     {
         // GET: Timeline
 
-        public ActionResult LoadTimelineFromWord(string wordSlug, int howMany = 1000000, int articleType = 1, int startingAt = 0, string searchPhrase = "")
+        public ActionResult LoadTimelineFromWord(string wordSlug, int howMany = 100000, int articleType = 1, int startingAt = 0, string searchPhrase = "")
         {
             if (searchPhrase == "") { searchPhrase = null; }
 
@@ -26,37 +26,22 @@ namespace FactFlux.Controllers
             {
                 var cachedTimeline = MemoryCache.Default["timelineResources_" + wordSlug];
 
-                var orderedResources = new List<ArticleLink>();
-
                 searchWord = db.Words.Where(x => x.Slug == wordSlug).FirstOrDefault();
+
+                var orderedResources = new List<GetTimeline_Result>();
 
                 ViewBag.MainWord = searchWord;
 
                 if (cachedTimeline != null)
                 {
-                    orderedResources = (List<ArticleLink>)cachedTimeline;
+                    orderedResources = (List<GetTimeline_Result>)cachedTimeline;
 
                     return View("TimeLine", orderedResources);
                 }
 
-                var orderedResourcesQuery = db.GetTimeline(wordSlug, howMany, articleType, startingAt, searchPhrase)
-                    .Select(x => new ArticleLink
-                    {
-                        ArticleLinkId = x.ArticleLinkId,
-                        ArticleLinkTitle = x.ArticleLinkTitle,
-                        ArticleLinkUrl = x.ArticleLinkUrl,
-                        DatePublished = x.DatePublished,
-                        DateAdded = x.DateAdded,
-                        FeedId = x.FeedId,
-                        //RSSFeed = db.RSSFeeds.Where(z => z.FeedId == x.FeedId);
-                    });
+                var orderedResourcesQuery = db.GetTimeline(wordSlug, howMany, articleType, startingAt, searchPhrase);
 
                 orderedResources = orderedResourcesQuery.ToList();
-
-                foreach (var article in orderedResources)
-                {
-                    article.RSSFeed = db.RSSFeeds.Where(x => x.FeedId == article.FeedId).FirstOrDefault();
-                }
 
                 MemoryCache.Default["timelineResources_" + wordSlug] = orderedResources;
 

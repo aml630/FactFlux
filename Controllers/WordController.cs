@@ -75,11 +75,11 @@ namespace FactFlux.Controllers
             return "I'm awake jeese";
         }
 
-        public ActionResult AddImageToWord (int wordId, HttpPostedFileBase imageFile)
+        public ActionResult AddImageToWord(int wordId, HttpPostedFileBase imageFile)
         {
             using (FactFluxEntities db = new FactFluxEntities())
             {
-               var getWord =  db.Words.Where(x => x.WordId == wordId).FirstOrDefault();
+                var getWord = db.Words.Where(x => x.WordId == wordId).FirstOrDefault();
                 getWord.Image = UploadImage(imageFile);
                 db.SaveChanges();
             }
@@ -431,29 +431,28 @@ namespace FactFlux.Controllers
             foreach (var singleWord in words)
             {
                 //for each word, check if we store a word or phrase that contains it
-                var doesExistList = db.Words.Where(x => x.Word1.ToLower().Contains(singleWord.ToLower())).OrderByDescending(x => x.Word1.Length).ToList();
+                var doesExistList = db.Words.Where
+                       (x => x.Word1.ToLower() == singleWord.ToLower()
+                    || (x.Word1.Contains(" ") && x.Word1.ToLower().Contains(singleWord.ToLower())
+                    )).OrderByDescending(x => x.Word1.Length).ToList();
 
                 // if we dont haveit, make it
-                if (doesExistList == null || doesExistList.Count == 0)
+                if (doesExistList == null || doesExistList.Count == 0 || !doesExistList.Any(x => x.Word1.ToLower() == singleWord.ToLower()))
                 {
                     var newWord = CreateNewWord(db, datePublished, singleWord);
-
-                    CreateWordLog(db, datePublished, newArticleLinke.ArticleLinkId, newWord.WordId, singleWord);
                 }
-                else
-                {
-                    //if we do have it, lets loop through them
-                    foreach (var doesExist in doesExistList)
-                    {
-                        //words or phrases should only be logged once per article
-                        var alreadyLogged = oneWordLogPerArticle.Any(x => x.Contains(newArticleLinke.ArticleLinkId.ToString() + doesExist.WordId));
-                        //if the word isn't banned, and the entire word or phrase is contained in the article, lets log it
-                        if (doesExist.Banned == false && newArticleLinke.ArticleLinkTitle.Contains(doesExist.Word1) && alreadyLogged == false)
-                        {
-                            oneWordLogPerArticle.Add(newArticleLinke.ArticleLinkId.ToString() + doesExist.WordId);
 
-                            CreateWordLog(db, datePublished, newArticleLinke.ArticleLinkId, doesExist.WordId, singleWord);
-                        }
+                //if we do have it, lets loop through them
+                foreach (var doesExist in doesExistList)
+                {
+                    //words or phrases should only be logged once per article
+                    var alreadyLogged = oneWordLogPerArticle.Any(x => x.Contains(newArticleLinke.ArticleLinkId.ToString() + doesExist.WordId));
+                    //if the word isn't banned, and the entire word or phrase is contained in the article, lets log it
+                    if (doesExist.Banned == false && newArticleLinke.ArticleLinkTitle.ToLower().Contains(doesExist.Word1.ToLower()) && alreadyLogged == false)
+                    {
+                        oneWordLogPerArticle.Add(newArticleLinke.ArticleLinkId.ToString() + doesExist.WordId);
+
+                        CreateWordLog(db, datePublished, newArticleLinke.ArticleLinkId, doesExist.WordId, singleWord);
                     }
                 }
 
@@ -488,9 +487,9 @@ namespace FactFlux.Controllers
 
         private static Word CreateNewWord(FactFluxEntities db, DateTime item, string singleWord)
         {
-            var newWord = db.Words.Where(x => x.Word1 == singleWord).FirstOrDefault();
+            var newWord = db.Words.Where(x => x.Word1.ToLower() == singleWord.ToLower()).FirstOrDefault();
 
-            if (newWord == null)
+            if (newWord == null && singleWord != "")
             {
                 newWord = new Word();
 
@@ -595,7 +594,6 @@ namespace FactFlux.Controllers
                         {
                             try
                             {
-
                                 var newArticleLinke = new ArticleLink();
 
                                 newArticleLinke.ArticleLinkTitle = item.Title.Text;
@@ -656,8 +654,8 @@ namespace FactFlux.Controllers
 
             using (FactFluxEntities db = new FactFluxEntities())
             {
-                var listOfWords = db.Words.Where(x => x.Word1.Contains(containsLetters) 
-                && x.Banned == false 
+                var listOfWords = db.Words.Where(x => x.Word1.Contains(containsLetters)
+                && x.Banned == false
                 & x.DailyCount != null)
                 .Select(x => new ApiWordInfo()
                 { Word = x.Word1, Slug = x.Slug, DailyCount = x.DailyCount.Value, WeeklyCount = x.WeeklyCount.Value, MonthlyCount = x.MonthlyCount.Value, YearlyCount = x.YearlyCount.Value }).Take(50).ToList();
@@ -673,9 +671,9 @@ namespace FactFlux.Controllers
             using (FactFluxEntities db = new FactFluxEntities())
             {
                 var listOfWords = db.Words.Where(x => x.Banned == false);
-          
-                
-                if(timeFrame == 1)
+
+
+                if (timeFrame == 1)
                 {
                     listOfWords = listOfWords.Where(x => x.DailyCount != null).OrderByDescending(x => x.DailyCount);
                 }
@@ -698,7 +696,7 @@ namespace FactFlux.Controllers
 
                 if (pageNumber != null)
                 {
-                    listOfWords = listOfWords.Skip(20*pageNumber.Value);
+                    listOfWords = listOfWords.Skip(20 * pageNumber.Value);
                 }
 
                 var listToSend = listOfWords.Take(20).Select(x => new ApiWordInfo()
