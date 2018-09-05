@@ -48,10 +48,13 @@
 
     @if (Request.IsAuthenticated && User.IsInRole("Admin"))
     {
-        <form action="~/Word/CheckFeedsForWords"><button>Get Next Feed</button></form>
-        <form action="~/Word/ReRunWordCounts"><button>Build Count Tables</button></form>
-        <a href="~/RSSfeed/index">RSS FEEDS</a>
-        @Html.Partial("_LoginPartial")
+
+        <form action="~/Word/CutLatestArticleIntoWords">
+            <button>Cut Up Article</button>
+        </form>
+
+            <a href="~/RSSfeed/index">RSS FEEDS</a>
+            @Html.Partial("_LoginPartial")
     }
 
 
@@ -218,8 +221,8 @@
 
     @@media (max-width: 450px) {
 
-    .headerTxt {
-        display: none;
+        .headerTxt {
+            display: none;
+        }
     }
-}
 </style>

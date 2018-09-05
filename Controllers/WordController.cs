@@ -329,9 +329,6 @@ namespace FactFlux.Controllers
                         ArticleLink newArticleLinke = CreateNewArticleLink(db, feed, item.Snippet.Title, item.Id.VideoId, item.Snippet.PublishedAt.Value);
 
                         articlesAdded += 1;
-
-                        CutArticleIntoWords(db, item.Snippet.PublishedAt.Value, newArticleLinke);
-
                     }
                     catch (Exception ex)
                     {
@@ -371,9 +368,6 @@ namespace FactFlux.Controllers
                         ArticleLink newArticleLinke = CreateNewArticleLink(db, feed, item.Title.Text, item.Links[0].Uri.AbsoluteUri, item.PublishDate.UtcDateTime);
 
                         articlesAdded += 1;
-
-                        CutArticleIntoWords(db, item.PublishDate.UtcDateTime, newArticleLinke);
-
                     }
                     catch (DbEntityValidationException ex)
                     {
@@ -420,7 +414,22 @@ namespace FactFlux.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        private static void CutArticleIntoWords(FactFluxEntities db, DateTime datePublished, ArticleLink newArticleLinke)
+        public string CutLatestArticleIntoWords()
+        {
+            using (var db = new FactFluxEntities())
+            {
+                var referencedArticles = db.WordLogs.Select(x => x.ArticleLinkId).Distinct();
+
+                var mostRecentArticle = db.ArticleLinks.Where(x => !referencedArticles.Contains(x.ArticleLinkId)).OrderBy(x=>x.DatePublished).FirstOrDefault();
+
+                CutArticleIntoWords(db, mostRecentArticle);
+            }
+
+            return "Success";
+        }
+
+
+        private static void CutArticleIntoWords(FactFluxEntities db, ArticleLink newArticleLinke)
         {
             //divide article title into words
             var punctuation = newArticleLinke.ArticleLinkTitle.Where(Char.IsPunctuation).Distinct().ToArray();
@@ -439,7 +448,7 @@ namespace FactFlux.Controllers
                 // if we dont haveit, make it
                 if (doesExistList == null || doesExistList.Count == 0 || !doesExistList.Any(x => x.Word1.ToLower() == singleWord.ToLower()))
                 {
-                    var newWord = CreateNewWord(db, datePublished, singleWord);
+                    var newWord = CreateNewWord(db, newArticleLinke.DatePublished, singleWord);
                 }
 
                 //if we do have it, lets loop through them
@@ -452,7 +461,7 @@ namespace FactFlux.Controllers
                     {
                         oneWordLogPerArticle.Add(newArticleLinke.ArticleLinkId.ToString() + doesExist.WordId);
 
-                        CreateWordLog(db, datePublished, newArticleLinke.ArticleLinkId, doesExist.WordId, singleWord);
+                        CreateWordLog(db, newArticleLinke.DatePublished, newArticleLinke.ArticleLinkId, doesExist.WordId, singleWord);
                     }
                 }
 
@@ -509,8 +518,6 @@ namespace FactFlux.Controllers
 
                 foreach (var article in articleList)
                 {
-                    UpdateCounts(newWord, article);
-
                     CreateWordLog(db, article.DatePublished, article.ArticleLinkId, newWord.WordId, singleWord);
                 }
 
@@ -518,28 +525,6 @@ namespace FactFlux.Controllers
             }
 
             return newWord;
-        }
-
-        private static void UpdateCounts(Word newWord, ArticleLink article)
-        {
-            if (article.DateAdded.AddDays(1) > DateTime.UtcNow)
-            {
-                newWord.DailyCount += 1;
-            }
-            if (article.DateAdded.AddDays(7) > DateTime.UtcNow)
-            {
-                newWord.WeeklyCount += 1;
-            }
-
-            if (article.DateAdded.AddDays(30) > DateTime.UtcNow)
-            {
-                newWord.MonthlyCount += 1;
-            }
-
-            if (article.DateAdded.AddDays(360) > DateTime.UtcNow)
-            {
-                newWord.YearlyCount += 1;
-            }
         }
 
         public static Word CreateNewWordInternal(string singleWord)

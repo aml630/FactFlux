@@ -21,18 +21,8 @@
 @if (Request.IsAuthenticated && User.IsInRole("Admin"))
 {
     <div class="admin">
-        <form action="~/Resource/CheckFeedsForResources">
-            <button class="btn btn-success">Pull down links from feeds</button>
-        </form>
-
-        <form action="~/TimelineLogic/AddTimeline">
-            <label>title</label>
-            <input name="title" />
-            <label>image</label>
-            <input name="image" />
-            <label>slug</label>
-            <input name="slug" />
-            <button>Add timeline</button>
+        <form action="~/Word/CutLatestArticleIntoWords">
+            <button>Cut Up Article</button>
         </form>
     </div>
 }
