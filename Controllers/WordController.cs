@@ -137,6 +137,31 @@ namespace FactFlux.Controllers
             return AddedSinceDate;
         }
 
+        public ActionResult AddParentWordOverChild(string parentWord, int childWordId)
+        {
+            using (FactFluxEntities db = new FactFluxEntities())
+            {
+                var parent = db.Words.Where(x => x.Word1.ToLower() == parentWord.ToLower()).FirstOrDefault();
+
+                if (parent == null)
+                {
+                    parent = CreateNewWord(db, DateTime.Now, parentWord);
+                }
+
+                var parentWordRecord = new ParentWord();
+
+                parentWordRecord.ParentWordId = parent.WordId;
+
+                parentWordRecord.ChildWordId = childWordId;
+
+                db.ParentWords.Add(parentWordRecord);
+
+                db.SaveChanges();
+
+                return Redirect(Request.UrlReferrer.ToString());
+            }
+        }
+
         public ActionResult AddChildWord(int parentWordId, string childWord)
         {
             using (FactFluxEntities db = new FactFluxEntities())
@@ -420,7 +445,7 @@ namespace FactFlux.Controllers
             {
                 var referencedArticles = db.WordLogs.Select(x => x.ArticleLinkId).Distinct();
 
-                var mostRecentArticle = db.ArticleLinks.Where(x => !referencedArticles.Contains(x.ArticleLinkId)).OrderBy(x=>x.DatePublished).FirstOrDefault();
+                var mostRecentArticle = db.ArticleLinks.Where(x => !referencedArticles.Contains(x.ArticleLinkId)).OrderBy(x => x.DatePublished).FirstOrDefault();
 
                 CutArticleIntoWords(db, mostRecentArticle);
             }
