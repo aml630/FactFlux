@@ -680,7 +680,9 @@ namespace FactFlux.Controllers
         {
             using (FactFluxEntities db = new FactFluxEntities())
             {
-                var listOfWords = db.Words.Where(x => x.Banned == false);
+                var childWordList = db.ParentWords.Select(x => x.ChildWordId).Distinct();
+
+                var listOfWords = db.Words.Where(x => x.Banned == false && !childWordList.Contains(x.WordId));
 
 
                 if (timeFrame == 1)
