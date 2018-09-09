@@ -443,9 +443,7 @@ namespace FactFlux.Controllers
         {
             using (var db = new FactFluxEntities())
             {
-                var referencedArticles = db.WordLogs.Select(x => x.ArticleLinkId).Distinct();
-
-                var mostRecentArticle = db.ArticleLinks.Where(x => !referencedArticles.Contains(x.ArticleLinkId)).OrderBy(x => x.DatePublished).FirstOrDefault();
+                var mostRecentArticle = db.ArticleLinks.SqlQuery("select * from articlelinks al left join wordlogs wl on wl.ArticleLinkId = al.ArticleLinkId where wl.wordlogid is null order by DatePublished ").FirstOrDefault();
 
                 CutArticleIntoWords(db, mostRecentArticle);
             }
@@ -454,7 +452,7 @@ namespace FactFlux.Controllers
         }
 
 
-        private static void CutArticleIntoWords(FactFluxEntities db, ArticleLink newArticleLinke)
+        private static void CutArticleIntoWords (FactFluxEntities db, ArticleLink newArticleLinke)
         {
             //divide article title into words
             var punctuation = newArticleLinke.ArticleLinkTitle.Where(Char.IsPunctuation).Distinct().ToArray();

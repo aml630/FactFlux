@@ -49,9 +49,13 @@
     @if (Request.IsAuthenticated && User.IsInRole("Admin"))
     {
 
+        <form action="~/Word/CheckFeedsForWords">
+            <button>Get New Articles</button>
+        </form>
         <form action="~/Word/CutLatestArticleIntoWords">
             <button>Cut Up Article</button>
         </form>
+
 
             <a href="~/RSSfeed/index">RSS FEEDS</a>
             @Html.Partial("_LoginPartial")
