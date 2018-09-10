@@ -45,8 +45,7 @@ namespace FactFlux.Controllers
             {
                 var topDaily = db.Words
                               .Where(x => x.Banned == false &&
-                              !db.ParentWords.Select(y => y.ChildWordId).Contains(x.WordId) && (
-                                 x.DailyCount > 2))
+                              !db.ParentWords.Select(y => y.ChildWordId).Contains(x.WordId))
                               .OrderByDescending(x => x.DailyCount).Take(20)
                               .ToList();
 
@@ -443,7 +442,11 @@ namespace FactFlux.Controllers
         {
             using (var db = new FactFluxEntities())
             {
-                var mostRecentArticle = db.ArticleLinks.SqlQuery("select * from articlelinks al left join wordlogs wl on wl.ArticleLinkId = al.ArticleLinkId where wl.wordlogid is null order by DatePublished ").FirstOrDefault();
+                var mostRecentArticle = db.ArticleLinks.SqlQuery(
+                    "select * from " +
+                    "articlelinks al left join wordlogs wl on wl.ArticleLinkId = al.ArticleLinkId " +
+                    "where wl.wordlogid is null order by DatePublished desc")
+                    .FirstOrDefault();
 
                 CutArticleIntoWords(db, mostRecentArticle);
             }
@@ -452,7 +455,7 @@ namespace FactFlux.Controllers
         }
 
 
-        private static void CutArticleIntoWords (FactFluxEntities db, ArticleLink newArticleLinke)
+        private static void CutArticleIntoWords(FactFluxEntities db, ArticleLink newArticleLinke)
         {
             //divide article title into words
             var punctuation = newArticleLinke.ArticleLinkTitle.Where(Char.IsPunctuation).Distinct().ToArray();
@@ -710,7 +713,7 @@ namespace FactFlux.Controllers
                 }
 
                 var listToSend = listOfWords.Take(20).Select(x => new ApiWordInfo()
-                { Word = x.Word1, Slug = x.Slug, DailyCount = x.DailyCount.Value, WeeklyCount = x.WeeklyCount.Value, MonthlyCount = x.MonthlyCount.Value, YearlyCount = x.YearlyCount.Value }).ToList();
+                { Word = x.Word1, Slug = x.Slug, Image = x.Image, DailyCount = x.DailyCount.Value, WeeklyCount = x.WeeklyCount.Value, MonthlyCount = x.MonthlyCount.Value, YearlyCount = x.YearlyCount.Value }).ToList();
 
                 var json = JsonConvert.SerializeObject(listToSend);
 
@@ -722,6 +725,7 @@ namespace FactFlux.Controllers
         {
             public string Word { get; set; }
             public string Slug { get; set; }
+            public string Image { get; set; }
             public int? DailyCount { get; set; }
             public int? WeeklyCount { get; set; }
             public int? MonthlyCount { get; set; }

@@ -325,6 +325,7 @@
     width: 50px;
     border-radius: 100px;
     float: right;
+    margin-top: -15px;
 }
 
 .AllCount {
@@ -371,6 +372,13 @@ select {
 }
 
 @media (max-width: 450px) {
+
+    .wordImg {
+        height: 70px;
+        width: 70px;
+        margin-right: 20px;
+    }
+
     .survey-item {
         margin-left: -50px !important;
     }

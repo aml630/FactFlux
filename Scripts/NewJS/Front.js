@@ -47,21 +47,45 @@ $(".getMoreWords").click(function () {
 })
 
 function appendWordToTable(item, filterWord, amount) {
-    $(".wordTableBody").append(
-        "<li class='survey-item' data-slug='" + item.Slug + "'" + "data-day='" + item.DailyCount + "' data-week='" + item.WeeklyCount + "'" + "data-month='" + item.MonthlyCount + "' data-year='" + item.YearlyCount + "'>" +
-        "<a href='" + item.Slug + "'>" +
-        "<span class='survey-name'>" + item.Word + "</span>" +
-        "<div class='pull-right'>" +
-        "<span class='dailyCount'>" +
-        "<i class='fa fa-calendar' aria-hidden='true'></i>" +
-        " " + filterWord + " Count: " + amount +
-        "</span>" +
-        "<span class='AllCount'>" +
-        "Daily:" +
-        "</span>" +
-        "</div>" +
-        "</a>" +
-        "</li>")
+
+    if (item.Image == null || item.Image == "")
+    {
+        $(".wordTableBody").append(
+            "<li class='survey-item' data-slug='" + item.Slug + "'" + "data-day='" + item.DailyCount + "' data-week='" + item.WeeklyCount + "'" + "data-month='" + item.MonthlyCount + "' data-year='" + item.YearlyCount + "'>" +
+            "<a href='" + item.Slug + "'>" +
+            "<span class='survey-name'>" + item.Word + "</span>" +
+            "<div class='pull-right'>" +
+            "<span class='dailyCount'>" +
+            "<i class='fa fa-calendar' aria-hidden='true'></i>" +
+            " " + filterWord + " Count: " + amount +
+            "</span>" +
+            "<span class='AllCount'>" +
+            "Daily:" +
+            "</span>" +
+            "</div>" +
+            "</a>" +
+            "</li>")
+    }else {
+        $(".wordTableBody").append(
+            "<li class='survey-item' data-slug='" + item.Slug + "'" + "data-day='" + item.DailyCount + "' data-week='" + item.WeeklyCount + "'" + "data-month='" + item.MonthlyCount + "' data-year='" + item.YearlyCount + "'>" +
+            "<a href='" + item.Slug + "'>" +
+            "<div class='topWord'>" +
+            "<span class='survey-name'>" + item.Word +
+            "</span>" +
+            "<img class ='wordImg' src='" + window.location.href + item.Image + "'/>" +
+            "</div>" +
+            "<div class='pull-right'>" +
+            "<span class='dailyCount'>" +
+            "<i class='fa fa-calendar' aria-hidden='true'></i>" +
+            " " + filterWord + " Count: " + amount +
+            "</span>" +
+            "<span class='AllCount'>" +
+            "Daily:" +
+            "</span>" +
+            "</div>" +
+            "</a>" +
+            "</li>")
+    }             
 }
 
 //////////////Start///////////Sorting by Letters
