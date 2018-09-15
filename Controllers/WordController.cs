@@ -20,25 +20,6 @@ namespace FactFlux.Controllers
 {
     public class WordController : Controller
     {
-        // GET: Word
-        public ActionResult WordsInTheNews()
-        {
-            using (FactFluxEntities db = new FactFluxEntities())
-            {
-                var wordListWithDailyCount = db.Words
-                                            .Where(x => x.Banned == false &&
-                                            !db.ParentWords.Select(y => y.ChildWordId).Contains(x.WordId) && (
-                                               x.DailyCount > 2
-                                            || x.WeeklyCount > 5
-                                            || x.MonthlyCount > 10
-                                            || x.YearlyCount > 15))
-                                            .OrderByDescending(x => x.DailyCount)
-                                            .ToList();
-
-                return View("index", wordListWithDailyCount);
-            }
-        }
-
         public ActionResult MostDiscussed()
         {
             using (FactFluxEntities db = new FactFluxEntities())
@@ -46,7 +27,8 @@ namespace FactFlux.Controllers
                 var topDaily = db.Words
                               .Where(x => x.Banned == false &&
                               !db.ParentWords.Select(y => y.ChildWordId).Contains(x.WordId))
-                              .OrderByDescending(x => x.DailyCount).Take(20)
+                              .OrderByDescending(x => x.DailyCount).Take(20).Select(x => new WordApiWordInfo()
+                              { Word = x.Word1, Slug = x.Slug, Image = x.Image, DailyCount = x.DailyCount.Value, WeeklyCount = x.WeeklyCount.Value, MonthlyCount = x.MonthlyCount.Value, YearlyCount = x.YearlyCount.Value, WordId=x.WordId})
                               .ToList();
 
                 return View("Front", topDaily);
@@ -448,15 +430,15 @@ namespace FactFlux.Controllers
                     "where wl.wordlogid is null order by DatePublished desc")
                     .FirstOrDefault();
 
-                CutArticleIntoWords(db, mostRecentArticle);
-            }
-
-            return "Success";
+                return CutArticleIntoWords(db, mostRecentArticle);
+            }      
         }
 
 
-        private static void CutArticleIntoWords(FactFluxEntities db, ArticleLink newArticleLinke)
+        private static string CutArticleIntoWords(FactFluxEntities db, ArticleLink newArticleLinke)
         {
+
+            string responseText = "Chopping: " + newArticleLinke.ArticleLinkTitle;
             //divide article title into words
             var punctuation = newArticleLinke.ArticleLinkTitle.Where(Char.IsPunctuation).Distinct().ToArray();
             var words = newArticleLinke.ArticleLinkTitle.Split().Select(x => x.Trim(punctuation));
@@ -472,8 +454,9 @@ namespace FactFlux.Controllers
                     )).OrderByDescending(x => x.Word1.Length).ToList();
 
                 // if we dont haveit, make it
-                if (doesExistList == null || doesExistList.Count == 0 || !doesExistList.Any(x => x.Word1.ToLower() == singleWord.ToLower()))
+                if (doesExistList == null || doesExistList.Count == 0 || !doesExistList.Any(x => x.Word1.ToLower() == singleWord.ToLower()) && singleWord != "")
                 {
+                    responseText += "--Creating: " + singleWord;
                     var newWord = CreateNewWord(db, newArticleLinke.DatePublished, singleWord);
                 }
 
@@ -485,6 +468,8 @@ namespace FactFlux.Controllers
                     //if the word isn't banned, and the entire word or phrase is contained in the article, lets log it
                     if (doesExist.Banned == false && newArticleLinke.ArticleLinkTitle.ToLower().Contains(doesExist.Word1.ToLower()) && alreadyLogged == false)
                     {
+                        responseText += "--logging: " + singleWord;
+
                         oneWordLogPerArticle.Add(newArticleLinke.ArticleLinkId.ToString() + doesExist.WordId);
 
                         CreateWordLog(db, newArticleLinke.DatePublished, newArticleLinke.ArticleLinkId, doesExist.WordId, singleWord);
@@ -493,6 +478,7 @@ namespace FactFlux.Controllers
 
                 db.SaveChanges();
             }
+            return responseText;
         }
 
         private static void CreateWordLog(FactFluxEntities db, DateTime datePublished, int articleId, int wordId, string singleWord)
@@ -540,7 +526,13 @@ namespace FactFlux.Controllers
 
                 db.SaveChanges();
 
-                var articleList = db.ArticleLinks.Where(x => x.ArticleLinkTitle.Contains(newWord.Word1)).ToList();
+                string sqLQuery = "select * from articlelinks al where " +
+                    "(al.ArticleLinkTitle like '%[^a-zA-Z0-9]' + '"+singleWord+"' + '[^a-zA-Z0-9]%' " +
+                    "or al.ArticleLinkTitle like '' + '" + singleWord + "' + ' %' " +
+                    "or al.ArticleLinkTitle like '% ' + '" + singleWord + "' + '') ";
+
+                var articleList = db.ArticleLinks.SqlQuery(sqLQuery)
+                    .ToList();
 
                 foreach (var article in articleList)
                 {
@@ -668,7 +660,7 @@ namespace FactFlux.Controllers
                 var listOfWords = db.Words.Where(x => x.Word1.Contains(containsLetters)
                 && x.Banned == false
                 & x.DailyCount != null)
-                .Select(x => new ApiWordInfo()
+                .Select(x => new WordApiWordInfo()
                 { Word = x.Word1, Slug = x.Slug, DailyCount = x.DailyCount.Value, WeeklyCount = x.WeeklyCount.Value, MonthlyCount = x.MonthlyCount.Value, YearlyCount = x.YearlyCount.Value }).Take(50).ToList();
 
                 var json = JsonConvert.SerializeObject(listOfWords);
@@ -712,24 +704,13 @@ namespace FactFlux.Controllers
                     listOfWords = listOfWords.Skip(20 * pageNumber.Value);
                 }
 
-                var listToSend = listOfWords.Take(20).Select(x => new ApiWordInfo()
+                var listToSend = listOfWords.Take(20).Select(x => new WordApiWordInfo()
                 { Word = x.Word1, Slug = x.Slug, Image = x.Image, DailyCount = x.DailyCount.Value, WeeklyCount = x.WeeklyCount.Value, MonthlyCount = x.MonthlyCount.Value, YearlyCount = x.YearlyCount.Value }).ToList();
 
                 var json = JsonConvert.SerializeObject(listToSend);
 
                 return json;
             }
-        }
-
-        public class ApiWordInfo
-        {
-            public string Word { get; set; }
-            public string Slug { get; set; }
-            public string Image { get; set; }
-            public int? DailyCount { get; set; }
-            public int? WeeklyCount { get; set; }
-            public int? MonthlyCount { get; set; }
-            public int? YearlyCount { get; set; }
         }
     }
 }

@@ -1,13 +1,16 @@
-﻿
-@model List<FactFlux.Word>
+﻿@*@model List<FactFlux.Models.WordApiWordInfo>*@
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="~/Content/Word/Index.css" rel="stylesheet" />
 <script src="~/Scripts/jquery-1.10.2.js"></script>
 <link href="~/Content/NewCSS/Front.css" rel="stylesheet" />
+@{
+
+    string baseUrl = Request.Url.Scheme + "://" + Request.Url.Authority +
+        Request.ApplicationPath.TrimEnd('/') + "/";
+}
 
 <div class="aboveGrid">
-
     <div class="mostDiscussed">
         <span>Most Discussed</span>
         <select class="timeFrames">
@@ -18,12 +21,36 @@
         </select>
     </div>
 
+    @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+    {
+        <form class='segmentChangeForm' action='~/Word/AddImageToWord' enctype='multipart/form-data' method='post'>
+            <label>WordID</label>
+            <input name="wordId" />
+            <label>Image File</label>
+            <input type='file' name='imageFile'>
+            <button>Add Image</button>
+        </form>
+        <hr />
+        <form class='segmentChangeForm' action='~/Word/AddParentWordOverChild' enctype='multipart/form-data' method='post'>
+            <label>Parent Word</label>
+            <input name="parentWord" />
+            <label>Child WordID</label>
+            <input name='childWordId'>
+            <button>Add Parent</button>
+        </form>
+
+        <hr />
+        <form class='segmentChangeForm' action='~/Word/CreateNewWordInternal' enctype='multipart/form-data' method='post'>
+            <label>New Word</label>
+            <input name="singleWord" />
+        </form>
+    }
+
     <div class="searchDiv">
         <input class="searchInput" />
         <i class="fa fa-search"></i>
     </div>
 </div>
-
 
 <ul class="surveys grid wordTableBody">
 
@@ -36,45 +63,31 @@
                 {
                     <div class="topWord">
                         <span class="survey-name">
-                            @word.Word1
+                            @word.Word
                         </span>
-                        <img class="wordImg" src="~/@word.Image" />
+                        <img class="wordImg" src="@baseUrl@word.Image" />
                     </div>
                 }
                 else
                 {
                     <span class="survey-name">
-                        @word.Word1
+                        @word.Word
                     </span>
-                }
-                @if (Request.IsAuthenticated && User.IsInRole("Admin"))
-                {
-                    <form class='segmentChangeForm' action='~/Word/AddImageToWord' enctype='multipart/form-data' method='post'>
-                        <input hidden value="@word.WordId" name="wordId" />
-                        <label>Image File</label>
-                        <input type='file' name='imageFile'>
-                        <button>Add Img</button>
-                    </form>
 
+                    if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        @word.WordId
+                    }
                 }
-                else
-                {
 
-                    <div class="pull-right">
-                        <span class="dailyCount">
-                            <i class="fa fa-calendar" aria-hidden="true"></i>
-                            Daily Count: @word.DailyCount
-                        </span>
-                        <span class="AllCount">
-                            <i class="fa fa-calendar" aria-hidden="true"></i>
-                            Daily: @word.DailyCount Monthly:@word.MonthlyCount Yearly:@word.YearlyCount
-                        </span>
-                    </div>
-                }
+                <div class="pull-right">
+                    <span class="dailyCount">
+                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                        Daily Count: @word.DailyCount
+                    </span>
+                </div>
             </a>
-
         </li>
-
     }
 
 </ul>
@@ -83,5 +96,38 @@
     <button class="getMoreWords">More Words</button>
 </div>
 
+<style>
+    .survey-item {
+        transition: 1s;
+        background-color: dimgrey;
+    }
+    
+    .survey-name {
+        color: white;
+        font-weight: bold;
+    }
+
+    .pull-right {
+        color: white;
+        font-weight: bold;
+    }
+
+    .survey-item:hover {
+        transition: .5s;
+        background-color: white;
+    }
+
+    .survey-item:hover .survey-name {
+        transition: .5s;
+        color: black;
+        font-weight: bold;
+    }
+
+        .survey-item:hover  .pull-right  {
+        transition: .5s;
+        color: black;
+        font-weight: bold;
+    }
+</style>
 
 <script src="~/Scripts/NewJS/Front.js"></script>
