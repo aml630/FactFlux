@@ -472,7 +472,7 @@ namespace FactFlux.Controllers
 
                         oneWordLogPerArticle.Add(newArticleLinke.ArticleLinkId.ToString() + doesExist.WordId);
 
-                        CreateWordLog(db, newArticleLinke.DatePublished, newArticleLinke.ArticleLinkId, doesExist.WordId, singleWord);
+                        CreateWordLog(db, newArticleLinke.DatePublished, newArticleLinke.ArticleLinkId, doesExist.WordId, doesExist.Slug);
                     }
                 }
 
@@ -481,7 +481,7 @@ namespace FactFlux.Controllers
             return responseText;
         }
 
-        private static void CreateWordLog(FactFluxEntities db, DateTime datePublished, int articleId, int wordId, string singleWord)
+        private static void CreateWordLog(FactFluxEntities db, DateTime datePublished, int articleId, int wordId, string wordSlug)
         {
             WordLog newWordLog = new WordLog();
             newWordLog.WordId = wordId;
@@ -492,12 +492,12 @@ namespace FactFlux.Controllers
 
             if (findParentWord != null)
             {
-                var parentWord = findParentWord.Word.Word1;
-                MemoryCache.Default.Remove("timelineResources_" + parentWord);
+                var parentWordSlug = findParentWord.Word.Slug;
+                MemoryCache.Default.Remove("timelineResources_" + parentWordSlug);
             }
             else
             {
-                MemoryCache.Default.Remove("timelineResources_" + singleWord);
+                MemoryCache.Default.Remove("timelineResources_" + wordSlug);
             }
 
             db.WordLogs.Add(newWordLog);
