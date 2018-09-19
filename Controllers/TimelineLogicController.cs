@@ -14,9 +14,9 @@ namespace FactFlux.Controllers
 {
     public class TimelineLogicController : Controller
     {
-        // GET: Timeline
+        // GET: Going to cap the max articles at 1000 for now
 
-        public ActionResult LoadTimelineFromWord(string wordSlug, int howMany = 100000, int articleType = 1, int startingAt = 0, string searchPhrase = "")
+        public ActionResult LoadTimelineFromWord(string wordSlug, int howMany = 1000, int articleType = 1, int startingAt = 0, string searchPhrase = "")
         {
             if (searchPhrase == "") { searchPhrase = null; }
 

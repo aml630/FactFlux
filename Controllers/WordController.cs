@@ -198,7 +198,7 @@ namespace FactFlux.Controllers
             }
         }
 
-        public string Ban(int wordId)
+        public ActionResult Ban(int wordId)
         {
             using (FactFluxEntities db = new FactFluxEntities())
             {
@@ -208,7 +208,7 @@ namespace FactFlux.Controllers
 
                 db.SaveChanges();
 
-                return "success";
+                return Redirect(Request.UrlReferrer.ToString());
             }
         }
 
@@ -512,20 +512,7 @@ namespace FactFlux.Controllers
 
             if (newWord == null && singleWord != "")
             {
-                newWord = new Word();
-
-                newWord.Word1 = singleWord;
-                newWord.DateCreated = item;
-                newWord.DailyCount = 1;
-                newWord.MonthlyCount = 1;
-                newWord.YearlyCount = 1;
-                newWord.WeeklyCount = 1;
-                newWord.Slug = singleWord.Replace(" ", "-").ToLower();
-
-                var newCreatedWord = db.Words.Add(newWord);
-
-                db.SaveChanges();
-
+    
                 string sqLQuery = "select * from articlelinks al where " +
                     "(al.ArticleLinkTitle like '%[^a-zA-Z0-9]' + '"+singleWord+"' + '[^a-zA-Z0-9]%' " +
                     "or al.ArticleLinkTitle like '' + '" + singleWord + "' + ' %' " +
@@ -533,6 +520,20 @@ namespace FactFlux.Controllers
 
                 var articleList = db.ArticleLinks.SqlQuery(sqLQuery)
                     .ToList();
+
+                newWord = new Word();
+
+                newWord.Word1 = singleWord;
+                newWord.DateCreated = item;
+                newWord.DailyCount = articleList.Where(x=>x.DatePublished > DateTime.Now.AddDays(-1)).Count();
+                newWord.WeeklyCount = articleList.Where(x => x.DatePublished > DateTime.Now.AddDays(-7)).Count();
+                newWord.MonthlyCount = articleList.Where(x => x.DatePublished > DateTime.Now.AddDays(-30)).Count();
+                newWord.YearlyCount = articleList.Where(x => x.DatePublished > DateTime.Now.AddDays(-365)).Count();
+                newWord.Slug = singleWord.Replace(" ", "-").ToLower();
+
+                var newCreatedWord = db.Words.Add(newWord);
+
+                db.SaveChanges();
 
                 foreach (var article in articleList)
                 {
@@ -545,7 +546,7 @@ namespace FactFlux.Controllers
             return newWord;
         }
 
-        public static Word CreateNewWordInternal(string singleWord)
+        public Word CreateNewWordInternal(string singleWord)
         {
             using (FactFluxEntities db = new FactFluxEntities())
             {

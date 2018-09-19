@@ -38,18 +38,22 @@
             <input name='childWordId'>
             <button>Add Parent</button>
         </form>
-
         <hr />
         <form class='segmentChangeForm' action='~/Word/CreateNewWordInternal' enctype='multipart/form-data' method='post'>
             <label>New Word</label>
             <input name="singleWord" />
+            <button>Create Word</button>
         </form>
-
+        <hr />
+        <form class='segmentChangeForm' action='~/Word/Ban' enctype='multipart/form-data' method='post'>
+            <label>WordID</label>
+            <input name="wordId" />
+            <button>Ban WordID</button>
+        </form>
+        <hr />
         <form class='segmentChangeForm' action='~/Word/ClearCache' enctype='multipart/form-data' method='post'>
             <button>Clear Cache</button>
         </form>
-
-
     }
 
     <div class="searchDiv">
